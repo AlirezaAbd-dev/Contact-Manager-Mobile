@@ -1,4 +1,11 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+   KeyboardAvoidingView,
+   Pressable,
+   StyleSheet,
+   Text,
+   TextInput,
+   View,
+} from 'react-native';
 import React from 'react';
 import { COLORS } from '../../constants/Colors';
 import Button from './Button';
@@ -10,7 +17,7 @@ type RegisterCardType = {
 
 const RegisterCard = (props: RegisterCardType) => {
    return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container}>
          <View style={styles.card}>
             <Text style={styles.title}>{props.title}</Text>
             <TextInput
@@ -37,7 +44,7 @@ const RegisterCard = (props: RegisterCardType) => {
                {props.title}
             </Button>
          </View>
-      </View>
+      </KeyboardAvoidingView>
    );
 };
 
@@ -46,7 +53,7 @@ export default RegisterCard;
 const styles = StyleSheet.create({
    container: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'center',
       backgroundColor: COLORS.background,
    },
@@ -57,6 +64,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
    },
    card: {
+      marginTop: 50,
       alignItems: 'center',
       width: '90%',
       backgroundColor: COLORS.card,

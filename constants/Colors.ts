@@ -4,6 +4,8 @@ export const COLORS = {
    rippleSecondary: '#dF539C',
    accent: '#bcbcbc',
    greenAccent: '#12ff23',
+   yellowAccent: '#ffaa00',
+   blueAccent: '#0186ff',
    card: '#44475a',
    navbar: '#222231',
    background: '#282a36',

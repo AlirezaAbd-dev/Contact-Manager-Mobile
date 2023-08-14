@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
-import { MaterialIcons } from '@expo/vector-icons';
 
 import LoginScreen from './screens/LoginScreen';
 import MainHeaderTitle from './components/UI/MainHeaderTitle';
@@ -57,7 +56,7 @@ export default function App() {
                <Stack.Screen
                   name='Home'
                   component={HomeScreen}
-                  options={({ navigation }) => ({
+                  options={{
                      headerTitle: () => {
                         return <MainHeaderTitle />;
                      },
@@ -65,7 +64,7 @@ export default function App() {
                      headerLeft: ({ tintColor }) => {
                         return <LogoutButton />;
                      },
-                  })}
+                  }}
                />
             </Stack.Navigator>
          </NavigationContainer>

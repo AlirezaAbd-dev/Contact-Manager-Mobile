@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import type _default from '@expo/vector-icons/build/MaterialIcons';
