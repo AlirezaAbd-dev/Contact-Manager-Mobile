@@ -1,11 +1,16 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
-import { COLORS } from '../../constants/Colors';
-import Button from '../../components/UI/Button';
 import RegisterCard from '../../components/UI/RegisterCard';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Screens } from '../../routes';
 
 const Login = () => {
-   function onLoginHandler() {}
+   const navigation = useNavigation<Screens>();
+
+   function onLoginHandler() {
+      navigation.navigate('Home');
+   }
 
    return (
       <RegisterCard

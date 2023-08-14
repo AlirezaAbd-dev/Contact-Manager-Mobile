@@ -9,6 +9,7 @@ import { useFonts } from 'expo-font';
 import LoginScreen from './screens/LoginScreen';
 import MainHeaderTitle from './components/UI/MainHeaderTitle';
 import { COLORS } from './constants/Colors';
+import HomeScreen from './screens/HomeScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -45,6 +46,15 @@ export default function App() {
                <Stack.Screen
                   name='SignScreen'
                   component={LoginScreen}
+                  options={{
+                     headerTitle: () => {
+                        return <MainHeaderTitle />;
+                     },
+                  }}
+               />
+               <Stack.Screen
+                  name='Home'
+                  component={HomeScreen}
                   options={{
                      headerTitle: () => {
                         return <MainHeaderTitle />;
