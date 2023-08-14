@@ -1,14 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import RegisterCard from '../../components/UI/RegisterCard';
 
 const Signin = () => {
-  return (
-    <View>
-      <Text>Signin</Text>
-    </View>
-  )
-}
+   return <RegisterCard title='ثبت نام' />;
+};
 
-export default Signin
+export default Signin;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

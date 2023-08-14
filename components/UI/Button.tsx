@@ -23,7 +23,7 @@ const Button = (props: ButtonProps) => {
          style={[styles.container, props.style]}
          android_ripple={{ color: COLORS.secondary }}
          onPress={props.onPress}>
-         <Text style={props.textStyle}>{props.children}</Text>
+         <Text style={[styles.text, props.textStyle]}>{props.children}</Text>
       </Pressable>
    );
 };
@@ -36,5 +36,8 @@ const styles = StyleSheet.create({
       paddingHorizontal: 14,
       borderRadius: 4,
       backgroundColor: COLORS.secondary,
+   },
+   text: {
+      fontFamily: 'Vazir',
    },
 });
