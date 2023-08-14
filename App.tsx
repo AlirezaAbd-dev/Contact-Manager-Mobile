@@ -5,11 +5,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import LoginScreen from './screens/LoginScreen';
 import MainHeaderTitle from './components/UI/MainHeaderTitle';
 import { COLORS } from './constants/Colors';
 import HomeScreen from './screens/HomeScreen';
+import LogoutButton from './components/UI/LogoutButton';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -55,11 +57,15 @@ export default function App() {
                <Stack.Screen
                   name='Home'
                   component={HomeScreen}
-                  options={{
+                  options={({ navigation }) => ({
                      headerTitle: () => {
                         return <MainHeaderTitle />;
                      },
-                  }}
+                     headerBackVisible: false,
+                     headerLeft: ({ tintColor }) => {
+                        return <LogoutButton />;
+                     },
+                  })}
                />
             </Stack.Navigator>
          </NavigationContainer>

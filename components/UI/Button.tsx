@@ -21,7 +21,7 @@ const Button = (props: ButtonProps) => {
    return (
       <Pressable
          style={[styles.container, props.style]}
-         android_ripple={{ color: COLORS.secondary }}
+         android_ripple={{ color: COLORS.rippleSecondary }}
          onPress={props.onPress}>
          <Text style={[styles.text, props.textStyle]}>{props.children}</Text>
       </Pressable>
