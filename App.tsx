@@ -1,20 +1,42 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './screens/HomeScreen';
+import { COLORS } from './constants/Colors';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+   return (
+      <>
+         <StatusBar style='light' />
+         <NavigationContainer>
+            <Stack.Navigator
+               screenOptions={{
+                  headerStyle: { backgroundColor: COLORS.background },
+                  headerTintColor: COLORS.primary,
+                  headerTitleAlign: 'center',
+               }}>
+               <Stack.Screen
+                  name='home'
+                  component={HomeScreen}
+                  options={{
+                     headerTitle(props) {
+                        return (
+                           <View>
+                              <Text>وب اپلیکیشن</Text>
+                              <Text></Text>
+                           </View>
+                        );
+                     },
+                  }}
+               />
+            </Stack.Navigator>
+         </NavigationContainer>
+      </>
+   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const styles = StyleSheet.create({});
