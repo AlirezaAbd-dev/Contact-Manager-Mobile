@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
 
-import HomeScreen from './screens/HomeScreen';
+import LoginScreen from './screens/LoginScreen';
 import MainHeaderTitle from './components/UI/MainHeaderTitle';
 import { COLORS } from './constants/Colors';
 
@@ -43,8 +43,8 @@ export default function App() {
                   contentStyle: { backgroundColor: COLORS.background },
                }}>
                <Stack.Screen
-                  name='home'
-                  component={HomeScreen}
+                  name='SignScreen'
+                  component={LoginScreen}
                   options={{
                      headerTitle: () => {
                         return <MainHeaderTitle />;

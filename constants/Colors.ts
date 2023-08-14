@@ -6,4 +6,5 @@ export const COLORS = {
    card: '#44475a',
    navbar: '#222231',
    background: '#282a36',
+   error: '#ff6550',
 };
