@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
       gap: 4,
    },
    headerTitle: {
-      fontSize: 24,
+      fontFamily: 'Vazir',
+      fontSize: 18,
       fontWeight: 'bold',
    },
    headerTitle1: {
