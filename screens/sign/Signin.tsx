@@ -3,7 +3,13 @@ import React from 'react';
 import RegisterCard from '../../components/UI/RegisterCard';
 
 const Signin = () => {
-   return <RegisterCard title='ثبت نام' />;
+   function onSigninHandler() {}
+   return (
+      <RegisterCard
+         title='ثبت نام'
+         confirmHandler={onSigninHandler}
+      />
+   );
 };
 
 export default Signin;

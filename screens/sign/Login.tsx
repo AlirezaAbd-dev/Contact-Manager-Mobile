@@ -5,7 +5,14 @@ import Button from '../../components/UI/Button';
 import RegisterCard from '../../components/UI/RegisterCard';
 
 const Login = () => {
-   return <RegisterCard title='ورود' />;
+   function onLoginHandler() {}
+
+   return (
+      <RegisterCard
+         title='ورود'
+         confirmHandler={onLoginHandler}
+      />
+   );
 };
 
 export default Login;

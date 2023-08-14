@@ -5,6 +5,7 @@ import Button from './Button';
 
 type RegisterCardType = {
    title: 'ورود' | 'ثبت نام';
+   confirmHandler: () => void;
 };
 
 const RegisterCard = (props: RegisterCardType) => {
@@ -30,7 +31,11 @@ const RegisterCard = (props: RegisterCardType) => {
                   رمز عبور خود را فراموش کرده اید؟
                </Text>
             </Pressable>
-            <Button style={styles.button}>{props.title}</Button>
+            <Button
+               onPress={props.confirmHandler}
+               style={styles.button}>
+               {props.title}
+            </Button>
          </View>
       </View>
    );
