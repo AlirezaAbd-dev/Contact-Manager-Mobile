@@ -3,6 +3,8 @@ import React from 'react';
 
 import MainContactCard from '../components/cards/MainContactCard';
 import Button from '../components/UI/Button';
+import { useNavigation } from '@react-navigation/native';
+import { Screens } from '../routes';
 
 const DUMMYDATA = [
    {
@@ -42,6 +44,8 @@ const DUMMYDATA = [
    },
 ];
 const HomeScreen = () => {
+   const navigation = useNavigation<Screens>();
+
    return (
       <ScrollView style={styles.container}>
          <Button
@@ -50,7 +54,10 @@ const HomeScreen = () => {
             icon='add-circle'
             iconColor='black'
             iconSize={20}
-            style={styles.addNewContactButton}>
+            style={styles.addNewContactButton}
+            onPress={() => {
+               navigation.navigate('AddContact');
+            }}>
             ساخت مخاطب جدید
          </Button>
          {DUMMYDATA.map((item, index) => (

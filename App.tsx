@@ -11,6 +11,7 @@ import MainHeaderTitle from './components/UI/MainHeaderTitle';
 import { COLORS } from './constants/Colors';
 import HomeScreen from './screens/HomeScreen';
 import LogoutButton from './components/UI/LogoutButton';
+import AddContactScreen from './screens/AddContactScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -65,6 +66,11 @@ export default function App() {
                         return <LogoutButton />;
                      },
                   }}
+               />
+
+               <Stack.Screen
+                  name='AddContact'
+                  component={AddContactScreen}
                />
             </Stack.Navigator>
          </NavigationContainer>
