@@ -7,6 +7,7 @@ import {
    View,
    ViewStyle,
 } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { COLORS } from '../../constants/Colors';
 
@@ -15,16 +16,41 @@ type ButtonProps = {
    onPress?: () => void;
    style?: StyleProp<ViewStyle>;
    textStyle?: StyleProp<TextStyle>;
-};
+} & (
+   | {
+        withIcon: true;
+        icon: any;
+        iconAlign: 'Right' | 'Left';
+        iconSize: number;
+        iconColor: string;
+     }
+   | { withIcon: false | undefined }
+);
 
-const Button = (props: ButtonProps) => {
+const Button = ({ ...props }: ButtonProps) => {
    return (
-      <Pressable
-         style={[styles.container, props.style]}
-         android_ripple={{ color: COLORS.rippleSecondary }}
-         onPress={props.onPress}>
-         <Text style={[styles.text, props.textStyle]}>{props.children}</Text>
-      </Pressable>
+      <View style={[styles.outerContainer, props.style]}>
+         <Pressable
+            style={[styles.container]}
+            android_ripple={{ color: COLORS.rippleSecondary }}
+            onPress={props.onPress}>
+            {props.withIcon && props.icon && props.iconAlign === 'Left' && (
+               <MaterialIcons
+                  name={props.icon}
+                  color={props.iconColor}
+                  size={props.iconSize}
+               />
+            )}
+            <Text style={[styles.text, props.textStyle]}>{props.children}</Text>
+            {props.withIcon && props.icon && props.iconAlign === 'Right' && (
+               <MaterialIcons
+                  name={props.icon}
+                  color={props.iconColor}
+                  size={props.iconSize}
+               />
+            )}
+         </Pressable>
+      </View>
    );
 };
 
@@ -32,10 +58,16 @@ export default Button;
 
 const styles = StyleSheet.create({
    container: {
+      flexDirection: 'row',
+      gap: 5,
+      alignItems: 'center',
       paddingVertical: 7,
       paddingHorizontal: 14,
-      borderRadius: 4,
+   },
+   outerContainer: {
       backgroundColor: COLORS.secondary,
+      overflow: 'hidden',
+      borderRadius: 4,
    },
    text: {
       fontFamily: 'Vazir',

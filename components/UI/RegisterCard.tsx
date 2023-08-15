@@ -39,6 +39,7 @@ const RegisterCard = (props: RegisterCardType) => {
                </Text>
             </Pressable>
             <Button
+               withIcon={false}
                onPress={props.confirmHandler}
                style={styles.button}>
                {props.title}
