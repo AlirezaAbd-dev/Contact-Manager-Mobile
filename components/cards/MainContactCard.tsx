@@ -3,25 +3,31 @@ import React from 'react';
 import { COLORS } from '../../constants/Colors';
 import IconButton from '../UI/IconButton';
 
-const MainContactCard = () => {
+type MainContactCardProps = {
+   fullname: string;
+   phone: string;
+   email: string;
+   _id: string;
+   image: any;
+};
+
+const MainContactCard = (props: MainContactCardProps) => {
    return (
       <View style={styles.card}>
          <Image
-            source={require('../assets/icon.png')}
+            source={require('../../assets/icon.png')}
             style={styles.cardImage}
          />
          <View style={styles.cardDetails}>
             <Text style={styles.cardDetailsText}>
-               نام و نام خانوادگی: علیرضا عابدی
+               نام و نام خانوادگی: {props.fullname}
             </Text>
             <View style={styles.cardDetailsDevider}></View>
             <Text style={styles.cardDetailsText}>
-               شماره موبایل: 09115584629
+               شماره موبایل: {props.phone}
             </Text>
             <View style={styles.cardDetailsDevider}></View>
-            <Text style={styles.cardDetailsText}>
-               ایمیل: alireza.abedi9310@gmail.com
-            </Text>
+            <Text style={styles.cardDetailsText}>ایمیل: {props.email}</Text>
          </View>
          <View style={styles.cardActionButtons}>
             <IconButton

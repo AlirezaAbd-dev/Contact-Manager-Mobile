@@ -6,35 +6,35 @@ import MainContactCard from '../components/cards/MainContactCard';
 const DUMMYDATA = [
    {
       fullname: 'علیرضا',
-      image: '',
+      image: require('../assets/icon.png'),
       phone: '09115584629',
       email: 'alireza.abedi9310@gmail.com',
       _id: 'sakdjvbsdkjh.kajfcnxzckjn',
    },
    {
       fullname: 'علیرضا',
-      image: '',
+      image: require('../assets/icon.png'),
       phone: '09115584629',
       email: 'alireza.abedi9310@gmail.com',
       _id: 'sakdjvbsdkjh.kajfcnxzckjn',
    },
    {
       fullname: 'علیرضا',
-      image: '',
+      image: require('../assets/icon.png'),
       phone: '09115584629',
       email: 'alireza.abedi9310@gmail.com',
       _id: 'sakdjvbsdkjh.kajfcnxzckjn',
    },
    {
       fullname: 'علیرضا',
-      image: '',
+      image: require('../assets/icon.png'),
       phone: '09115584629',
       email: 'alireza.abedi9310@gmail.com',
       _id: 'sakdjvbsdkjh.kajfcnxzckjn',
    },
    {
       fullname: 'علیرضا',
-      image: '',
+      image: require('../assets/icon.png'),
       phone: '09115584629',
       email: 'alireza.abedi9310@gmail.com',
       _id: 'sakdjvbsdkjh.kajfcnxzckjn',
@@ -43,8 +43,11 @@ const DUMMYDATA = [
 const HomeScreen = () => {
    return (
       <ScrollView style={styles.container}>
-         {DUMMYDATA.map((item) => (
-            <MainContactCard />
+         {DUMMYDATA.map((item, index) => (
+            <MainContactCard
+               key={index}
+               {...item}
+            />
          ))}
          <View style={styles.bottomFixer}></View>
       </ScrollView>
