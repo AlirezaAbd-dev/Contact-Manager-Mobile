@@ -71,6 +71,9 @@ export default function App() {
                <Stack.Screen
                   name='AddContact'
                   component={AddContactScreen}
+                  options={{
+                     title: 'ساخت مخاطب جدید',
+                  }}
                />
             </Stack.Navigator>
          </NavigationContainer>
