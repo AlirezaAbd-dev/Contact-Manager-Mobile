@@ -14,7 +14,7 @@ import Button from '../components/UI/Button';
 import { COLORS } from '../constants/Colors';
 
 const AddContactScreen = () => {
-   const [image, setImage] = useState('');
+   const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>();
 
    const navigation = useNavigation();
 
@@ -29,8 +29,7 @@ const AddContactScreen = () => {
 
       console.log(result);
 
-      if (!result.canceled)
-         if (result.assets[0]) setImage(result.assets[0].uri);
+      if (!result.canceled) if (result.assets[0]) setImage(result.assets[0]);
    };
 
    return (
@@ -41,7 +40,7 @@ const AddContactScreen = () => {
          <ScrollView style={styles.container}>
             {image ? (
                <Image
-                  source={{ uri: image }}
+                  source={{ uri: image.uri }}
                   style={styles.pickedImage}
                />
             ) : (
