@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
 import { COLORS } from '../../constants/Colors';
 import IconButton from '../UI/IconButton';
+import { useNavigation } from '@react-navigation/native';
+import { Screens } from '../../routes';
 
 type MainContactCardProps = {
    fullname: string;
@@ -12,6 +14,8 @@ type MainContactCardProps = {
 };
 
 const MainContactCard = (props: MainContactCardProps) => {
+   const navigation = useNavigation<Screens>();
+
    return (
       <View style={styles.card}>
          <Image
@@ -39,6 +43,9 @@ const MainContactCard = (props: MainContactCardProps) => {
                icon='edit'
                color={COLORS.yellowAccent}
                size={20}
+               onPress={() =>
+                  navigation.navigate('EditContact', { id: props._id })
+               }
             />
             <IconButton
                icon='delete'

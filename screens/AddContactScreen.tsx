@@ -5,32 +5,18 @@ import {
    View,
    KeyboardAvoidingView,
 } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import * as ImagePicker from 'expo-image-picker';
 
 import CustomTextInput from '../components/UI/TextInput';
 import Button from '../components/UI/Button';
 import { COLORS } from '../constants/Colors';
+import usePickImage from '../hooks/usePickImage';
 
 const AddContactScreen = () => {
-   const [image, setImage] = useState<ImagePicker.ImagePickerAsset | null>();
-
    const navigation = useNavigation();
 
-   const pickImage = async () => {
-      // No permissions request is necessary for launching the image library
-      let result = await ImagePicker.launchImageLibraryAsync({
-         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-         allowsEditing: true,
-         aspect: [16, 11],
-         quality: 0.5,
-      });
-
-      console.log(result);
-
-      if (!result.canceled) if (result.assets[0]) setImage(result.assets[0]);
-   };
+   const { image, pickImage } = usePickImage();
 
    return (
       <KeyboardAvoidingView
@@ -64,7 +50,7 @@ const AddContactScreen = () => {
                      style={[styles.button]}
                      withIcon={false}
                      onPress={pickImage}>
-                     بارگذاری عکس
+                     انتخاب عکس
                   </Button>
                   <CustomTextInput
                      style={styles.jobInput}

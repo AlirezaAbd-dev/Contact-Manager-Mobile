@@ -1,8 +1,8 @@
 export const COLORS = {
    primary: '#BD93F9',
-   ripplePrimary: '#aD83e9',
+   ripplePrimary: '#9D73e9',
    secondary: '#F273BC',
-   rippleSecondary: '#dF539C',
+   rippleSecondary: '#bF539C',
    accent: '#bcbcbc',
    greenAccent: '#12ff23',
    yellowAccent: '#ffaa00',
@@ -11,5 +11,5 @@ export const COLORS = {
    navbar: '#222231',
    background: '#282a36',
    error: '#ff6550',
-   rippleError: '#ff5540',
+   rippleError: '#ef4540',
 };

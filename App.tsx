@@ -12,6 +12,7 @@ import { COLORS } from './constants/Colors';
 import HomeScreen from './screens/HomeScreen';
 import LogoutButton from './components/UI/LogoutButton';
 import AddContactScreen from './screens/AddContactScreen';
+import EditContactScreen from './screens/EditContactScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -73,6 +74,16 @@ export default function App() {
                   component={AddContactScreen}
                   options={{
                      title: 'ساخت مخاطب جدید',
+                     headerBackVisible: false,
+                  }}
+               />
+
+               <Stack.Screen
+                  name='EditContact'
+                  component={EditContactScreen}
+                  options={{
+                     title: 'ویرایش مخاطب',
+                     headerTintColor: COLORS.yellowAccent,
                      headerBackVisible: false,
                   }}
                />
