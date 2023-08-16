@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Login from './sign/Login';

@@ -4,6 +4,8 @@ import { COLORS } from '../../constants/Colors';
 import IconButton from '../UI/IconButton';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from '../../routes';
+import Divider from '../UI/Divider';
+import CardDetails from '../layouts/CardDetails';
 
 type MainContactCardProps = {
    fullname: string;
@@ -22,22 +24,23 @@ const MainContactCard = (props: MainContactCardProps) => {
             source={require('../../assets/icon.png')}
             style={styles.cardImage}
          />
-         <View style={styles.cardDetails}>
+         <CardDetails>
             <Text style={styles.cardDetailsText}>
                نام و نام خانوادگی: {props.fullname}
             </Text>
-            <View style={styles.cardDetailsDevider}></View>
+            <Divider />
             <Text style={styles.cardDetailsText}>
                شماره موبایل: {props.phone}
             </Text>
-            <View style={styles.cardDetailsDevider}></View>
+            <Divider />
             <Text style={styles.cardDetailsText}>ایمیل: {props.email}</Text>
-         </View>
+         </CardDetails>
          <View style={styles.cardActionButtons}>
             <IconButton
                icon='remove-red-eye'
                color={COLORS.blueAccent}
                size={20}
+               onPress={() => navigation.navigate('Details', { id: props._id })}
             />
             <IconButton
                icon='edit'
@@ -72,19 +75,10 @@ const styles = StyleSheet.create({
       height: 220,
       borderRadius: 30,
    },
-   cardDetails: {
-      margin: 10,
-      padding: 15,
-      backgroundColor: COLORS.accent,
-      borderRadius: 25,
-   },
+
    cardDetailsText: {
       fontFamily: 'Vazir',
       paddingVertical: 5,
-   },
-   cardDetailsDevider: {
-      borderTopWidth: 0.5,
-      borderColor: COLORS.background,
    },
    cardActionButtons: {
       flexDirection: 'row',

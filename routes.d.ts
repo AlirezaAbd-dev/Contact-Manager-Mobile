@@ -6,6 +6,7 @@ type Routes = {
    Home: undefined;
    AddContact: undefined;
    EditContact: { id: string };
+   Details: { id: string };
 };
 
 type Screens = NativeStackNavigationProp<Routes>;

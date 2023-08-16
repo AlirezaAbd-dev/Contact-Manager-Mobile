@@ -13,6 +13,7 @@ import HomeScreen from './screens/HomeScreen';
 import LogoutButton from './components/UI/LogoutButton';
 import AddContactScreen from './screens/AddContactScreen';
 import EditContactScreen from './screens/EditContactScreen';
+import ContactDetails from './screens/ContactDetails';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -63,7 +64,7 @@ export default function App() {
                         return <MainHeaderTitle />;
                      },
                      headerBackVisible: false,
-                     headerLeft: ({ tintColor }) => {
+                     headerLeft: () => {
                         return <LogoutButton />;
                      },
                   }}
@@ -75,6 +76,19 @@ export default function App() {
                   options={{
                      title: 'ساخت مخاطب جدید',
                      headerBackVisible: false,
+                     animation: 'slide_from_bottom',
+                  }}
+               />
+
+               <Stack.Screen
+                  name='Details'
+                  component={ContactDetails}
+                  options={{
+                     headerTitle: () => {
+                        return <MainHeaderTitle />;
+                     },
+                     headerBackVisible: false,
+                     animation: 'slide_from_left',
                   }}
                />
 
@@ -85,6 +99,7 @@ export default function App() {
                      title: 'ویرایش مخاطب',
                      headerTintColor: COLORS.yellowAccent,
                      headerBackVisible: false,
+                     animation: 'slide_from_right',
                   }}
                />
             </Stack.Navigator>
