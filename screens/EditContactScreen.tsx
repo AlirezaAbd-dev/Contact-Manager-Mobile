@@ -12,6 +12,7 @@ import { COLORS } from '../constants/Colors';
 import CustomTextInput from '../components/UI/TextInput';
 import Button from '../components/UI/Button';
 import usePickImage from '../hooks/usePickImage';
+import Card from '../components/layouts/Card';
 
 const EditContactScreen = () => {
    const navigation = useNavigation<Screens>();
@@ -30,7 +31,7 @@ const EditContactScreen = () => {
             style={{ flex: 1 }}
             behavior='position'
             contentContainerStyle={{ flex: 1 }}>
-            <View style={styles.card}>
+            <Card>
                <View style={styles.imageContainer}>
                   <Image
                      style={styles.image}
@@ -81,7 +82,7 @@ const EditContactScreen = () => {
                      انصراف
                   </Button>
                </View>
-            </View>
+            </Card>
          </KeyboardAvoidingView>
       </ScrollView>
    );
@@ -93,12 +94,6 @@ const styles = StyleSheet.create({
    container: {
       flex: 1,
       margin: 20,
-   },
-   card: {
-      backgroundColor: COLORS.card,
-      width: '100%',
-      padding: 20,
-      borderRadius: 30,
    },
    imageContainer: {
       alignItems: 'center',
