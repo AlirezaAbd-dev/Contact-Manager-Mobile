@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import { COLORS } from '../../constants/Colors';
 import Button from './Button';
+import CustomTextInput from './TextInput';
 
 type RegisterCardType = {
    title: 'ورود' | 'ثبت نام';
@@ -20,17 +21,13 @@ const RegisterCard = (props: RegisterCardType) => {
       <KeyboardAvoidingView style={styles.container}>
          <View style={styles.card}>
             <Text style={styles.title}>{props.title}</Text>
-            <TextInput
+            <CustomTextInput
                keyboardType='email-address'
-               placeholderTextColor='gray'
                focusable={true}
-               style={[styles.textInput]}
                placeholder='ایمیل'
             />
-            <TextInput
+            <CustomTextInput
                secureTextEntry={true}
-               placeholderTextColor='gray'
-               style={[styles.textInput]}
                placeholder='رمز عبور'
             />
             <Pressable style={styles.forgetPasswordPressable}>
@@ -72,19 +69,6 @@ const styles = StyleSheet.create({
       borderRadius: 8,
       padding: 20,
       elevation: 8,
-   },
-   textInput: {
-      borderWidth: 0.3,
-      borderColor: 'white',
-      borderRadius: 4,
-      marginVertical: 10,
-      padding: 5,
-      direction: 'rtl',
-      color: 'white',
-      fontFamily: 'Vazir',
-      fontSize: 16,
-      width: '100%',
-      textAlign: 'right',
    },
    forgetPasswordPressable: {
       alignSelf: 'flex-end',

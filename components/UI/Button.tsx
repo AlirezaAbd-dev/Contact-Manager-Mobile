@@ -16,6 +16,7 @@ type ButtonProps = {
    onPress?: () => void;
    style?: StyleProp<ViewStyle>;
    textStyle?: StyleProp<TextStyle>;
+   rippleColor?: string;
 } & (
    | {
         withIcon: true;
@@ -32,7 +33,9 @@ const Button = ({ ...props }: ButtonProps) => {
       <View style={[styles.outerContainer, props.style]}>
          <Pressable
             style={[styles.container]}
-            android_ripple={{ color: COLORS.rippleSecondary }}
+            android_ripple={{
+               color: props.rippleColor || COLORS.rippleSecondary,
+            }}
             onPress={props.onPress}>
             {props.withIcon && props.icon && props.iconAlign === 'Left' && (
                <MaterialIcons
