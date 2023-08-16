@@ -5,14 +5,33 @@ import {
    View,
    KeyboardAvoidingView,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
+
 import CustomTextInput from '../components/UI/TextInput';
 import Button from '../components/UI/Button';
 import { COLORS } from '../constants/Colors';
-import { useNavigation } from '@react-navigation/native';
 
 const AddContactScreen = () => {
+   const [image, setImage] = useState('');
+
    const navigation = useNavigation();
+
+   const pickImage = async () => {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+         mediaTypes: ImagePicker.MediaTypeOptions.Images,
+         allowsEditing: true,
+         aspect: [16, 11],
+         quality: 0.5,
+      });
+
+      console.log(result);
+
+      if (!result.canceled)
+         if (result.assets[0]) setImage(result.assets[0].uri);
+   };
 
    return (
       <KeyboardAvoidingView
@@ -20,10 +39,17 @@ const AddContactScreen = () => {
          behavior='position'
          contentContainerStyle={{ flex: 1 }}>
          <ScrollView style={styles.container}>
-            <Image
-               style={styles.image}
-               source={require('../assets/images/man-taking-note.png')}
-            />
+            {image ? (
+               <Image
+                  source={{ uri: image }}
+                  style={styles.pickedImage}
+               />
+            ) : (
+               <Image
+                  style={styles.headerImage}
+                  source={require('../assets/images/man-taking-note.png')}
+               />
+            )}
             <View style={styles.inputContainer}>
                <CustomTextInput placeholder='نام و نام خانوادگی' />
                <CustomTextInput
@@ -37,7 +63,8 @@ const AddContactScreen = () => {
                <View style={styles.lastInputSection}>
                   <Button
                      style={[styles.button]}
-                     withIcon={false}>
+                     withIcon={false}
+                     onPress={pickImage}>
                      بارگذاری عکس
                   </Button>
                   <CustomTextInput
@@ -83,10 +110,17 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       paddingRight: 1,
    },
-   image: {
+   headerImage: {
       width: '80%',
       height: 'auto',
       aspectRatio: 16 / 9,
+      alignSelf: 'center',
+   },
+   pickedImage: {
+      width: 200,
+      height: 'auto',
+      aspectRatio: 1 / 1,
+      borderRadius: 100,
       alignSelf: 'center',
    },
    buttonsContainer: {
