@@ -10,7 +10,7 @@ const LogoutButton = () => {
    const navigation = useNavigation<Screens>();
 
    function logoutHandler() {
-      navigation.navigate('SignScreen');
+      navigation.replace('SignScreen');
    }
 
    return (

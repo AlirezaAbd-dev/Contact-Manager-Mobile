@@ -17,6 +17,7 @@ type ButtonProps = {
    style?: StyleProp<ViewStyle>;
    textStyle?: StyleProp<TextStyle>;
    rippleColor?: string;
+   disabled?: boolean;
 } & (
    | {
         withIcon: true;
@@ -30,8 +31,14 @@ type ButtonProps = {
 
 const Button = ({ ...props }: ButtonProps) => {
    return (
-      <View style={[styles.outerContainer, props.style]}>
+      <View
+         style={[
+            styles.outerContainer,
+            props.style,
+            props.disabled && styles.disabled,
+         ]}>
          <Pressable
+            disabled={props.disabled}
             style={[styles.container]}
             android_ripple={{
                color: props.rippleColor || COLORS.rippleSecondary,
@@ -74,5 +81,8 @@ const styles = StyleSheet.create({
    },
    text: {
       fontFamily: 'Vazir',
+   },
+   disabled: {
+      backgroundColor: COLORS.accent,
    },
 });
