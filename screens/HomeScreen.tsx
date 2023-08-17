@@ -15,6 +15,7 @@ import { Screens } from '../routes';
 import { getContactsAPI } from '../APIs/contactAPIs';
 import useToken from '../hooks/useToken';
 import { COLORS } from '../constants/Colors';
+import Error from '../components/UI/Error';
 
 const HomeScreen = () => {
    const token = useToken();
@@ -48,15 +49,11 @@ const HomeScreen = () => {
          )}
 
          {!isLoading && isError && (
-            <Text
-               style={{
-                  color: COLORS.error,
-                  fontFamily: 'Vazir',
-                  alignSelf: 'center',
-               }}
-            >
-               {(error as any).response.data.message || (error as any).message}
-            </Text>
+            <Error
+               errorMessage={
+                  (error as any).response.data.message || (error as any).message
+               }
+            />
          )}
 
          {!isLoading && data && data.length > 0 && (
