@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SplashScreen from 'expo-splash-screen';
 import { useFonts } from 'expo-font';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import LoginScreen from './screens/LoginScreen';
 import MainHeaderTitle from './components/UI/MainHeaderTitle';
@@ -73,7 +74,7 @@ export default function App() {
                   <Stack.Screen
                      name='Home'
                      component={HomeScreen}
-                     options={{
+                     options={({ navigation }) => ({
                         headerTitle: () => {
                            return <MainHeaderTitle />;
                         },
@@ -81,7 +82,20 @@ export default function App() {
                         headerLeft: () => {
                            return <LogoutButton />;
                         },
-                     }}
+                        headerRight: ({ tintColor }) => {
+                           return (
+                              <MaterialIcons
+                                 suppressHighlighting={true}
+                                 name='add'
+                                 color={tintColor}
+                                 size={24}
+                                 onPress={() => {
+                                    navigation.navigate('AddContact');
+                                 }}
+                              />
+                           );
+                        },
+                     })}
                   />
 
                   <Stack.Screen

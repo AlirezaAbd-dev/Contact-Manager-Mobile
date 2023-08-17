@@ -15,15 +15,17 @@ type IconButtonType = {
    size: number;
    color: string;
    style?: StyleProp<ViewStyle>;
+   containerStyle?: StyleProp<ViewStyle>;
 };
 
 const IconButton = (props: IconButtonType) => {
    return (
-      <View style={styles.outerContainer}>
+      <View style={[styles.outerContainer, props.containerStyle]}>
          <Pressable
             android_ripple={{ color: props.color }}
             style={[styles.container, props.style]}
-            onPress={props.onPress}>
+            onPress={props.onPress}
+         >
             <MaterialIcons
                name={props.icon}
                size={props.size}

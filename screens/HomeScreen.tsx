@@ -2,16 +2,13 @@ import {
    ActivityIndicator,
    FlatList,
    StyleSheet,
-   Text,
    View,
+   Text,
 } from 'react-native';
 import React from 'react';
 import { useQuery } from 'react-query';
 
 import MainContactCard from '../components/cards/MainContactCard';
-import Button from '../components/UI/Button';
-import { useNavigation } from '@react-navigation/native';
-import { Screens } from '../routes';
 import { getContactsAPI } from '../APIs/contactAPIs';
 import useToken from '../hooks/useToken';
 import { COLORS } from '../constants/Colors';
@@ -19,7 +16,6 @@ import Error from '../components/UI/Error';
 
 const HomeScreen = () => {
    const token = useToken();
-   const navigation = useNavigation<Screens>();
    const { data, isLoading, isError, error } = useQuery(
       ['contacts', token],
       getContactsAPI,
@@ -27,19 +23,6 @@ const HomeScreen = () => {
 
    return (
       <View style={styles.container}>
-         <Button
-            withIcon={true}
-            iconAlign='Left'
-            icon='add-circle'
-            iconColor='black'
-            iconSize={20}
-            style={styles.addNewContactButton}
-            onPress={() => {
-               navigation.navigate('AddContact');
-            }}
-         >
-            ساخت مخاطب جدید
-         </Button>
          {isLoading && (
             <ActivityIndicator
                style={{ alignSelf: 'center' }}
@@ -56,9 +39,21 @@ const HomeScreen = () => {
             />
          )}
 
+         {!isLoading && data?.length === 0 && (
+            <Text
+               style={{
+                  color: 'white',
+                  fontFamily: 'Vazir',
+                  alignSelf: 'center',
+               }}
+            >
+               شما در حال حاظر هیچ مخاطبی را ثبت نکرده اید.
+            </Text>
+         )}
+
          {!isLoading && data && data.length > 0 && (
             <FlatList
-               style={{ flex: 1 }}
+               style={{ flex: 1, paddingBottom: 100 }}
                data={data}
                keyExtractor={(item) => item._id}
                renderItem={({ item }) => {
@@ -81,10 +76,5 @@ const styles = StyleSheet.create({
    container: {
       flex: 1,
       paddingHorizontal: 20,
-   },
-   addNewContactButton: {
-      alignSelf: 'flex-end',
-      marginVertical: 10,
-      borderRadius: 20,
    },
 });
