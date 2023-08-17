@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RegisterCard, { FormSchemaType } from '../../components/UI/RegisterCard';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from '../../routes';
+import { API_URL } from '../../env';
 
 const Login = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +18,7 @@ const Login = () => {
          setError('');
          setIsLoading(true);
          const response = await axios.post(
-            'https://contact-manager-ecru.vercel.app/api/login',
+            `${API_URL}/login`,
             {
                ...formData,
             },

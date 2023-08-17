@@ -1,61 +1,31 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
-import React, { useLayoutEffect } from 'react';
+import {
+   ActivityIndicator,
+   FlatList,
+   StyleSheet,
+   Text,
+   View,
+} from 'react-native';
+import React from 'react';
+import { useQuery } from 'react-query';
 
 import MainContactCard from '../components/cards/MainContactCard';
 import Button from '../components/UI/Button';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from '../routes';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getContactsAPI } from '../APIs/contactAPIs';
+import useToken from '../hooks/useToken';
+import { COLORS } from '../constants/Colors';
 
-const DUMMYDATA = [
-   {
-      fullname: 'علیرضا',
-      image: require('../assets/icon.png'),
-      phone: '09115584629',
-      email: 'alireza.abedi9310@gmail.com',
-      _id: 'sakdjvbsdkjh.kajfcnxzckjn',
-   },
-   {
-      fullname: 'علیرضا',
-      image: require('../assets/icon.png'),
-      phone: '09115584629',
-      email: 'alireza.abedi9310@gmail.com',
-      _id: 'sakdjvbsdkjh.kajfcnxzckjn',
-   },
-   {
-      fullname: 'علیرضا',
-      image: require('../assets/icon.png'),
-      phone: '09115584629',
-      email: 'alireza.abedi9310@gmail.com',
-      _id: 'sakdjvbsdkjh.kajfcnxzckjn',
-   },
-   {
-      fullname: 'علیرضا',
-      image: require('../assets/icon.png'),
-      phone: '09115584629',
-      email: 'alireza.abedi9310@gmail.com',
-      _id: 'sakdjvbsdkjh.kajfcnxzckjn',
-   },
-   {
-      fullname: 'علیرضا',
-      image: require('../assets/icon.png'),
-      phone: '09115584629',
-      email: 'alireza.abedi9310@gmail.com',
-      _id: 'sakdjvbsdkjh.kajfcnxzckjn',
-   },
-];
 const HomeScreen = () => {
+   const token = useToken();
    const navigation = useNavigation<Screens>();
-
-   useLayoutEffect(() => {
-      (async () => {
-         const token = await AsyncStorage.getItem('token');
-         console.log('token: ' + token);
-      })();
-   }, []);
+   const { data, isLoading, isError, error } = useQuery(
+      ['contacts', token],
+      getContactsAPI,
+   );
 
    return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
          <Button
             withIcon={true}
             iconAlign='Left'
@@ -69,14 +39,42 @@ const HomeScreen = () => {
          >
             ساخت مخاطب جدید
          </Button>
-         {DUMMYDATA.map((item, index) => (
-            <MainContactCard
-               key={index}
-               {...item}
+         {isLoading && (
+            <ActivityIndicator
+               style={{ alignSelf: 'center' }}
+               size={'large'}
+               color={COLORS.primary}
             />
-         ))}
-         <View style={styles.bottomFixer}></View>
-      </ScrollView>
+         )}
+
+         {!isLoading && isError && (
+            <Text
+               style={{
+                  color: COLORS.error,
+                  fontFamily: 'Vazir',
+                  alignSelf: 'center',
+               }}
+            >
+               {(error as any).response.data.message || (error as any).message}
+            </Text>
+         )}
+
+         {!isLoading && data && data.length > 0 && (
+            <FlatList
+               style={{ flex: 1 }}
+               data={data}
+               keyExtractor={(item) => item._id}
+               renderItem={({ item }) => {
+                  return (
+                     <MainContactCard
+                        key={item._id}
+                        {...item}
+                     />
+                  );
+               }}
+            />
+         )}
+      </View>
    );
 };
 
@@ -85,11 +83,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
    container: {
       flex: 1,
-      padding: 20,
-      paddingTop: 0,
-   },
-   bottomFixer: {
-      padding: 20,
+      paddingHorizontal: 20,
    },
    addNewContactButton: {
       alignSelf: 'flex-end',

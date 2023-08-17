@@ -6,7 +6,7 @@ const MainHeaderTitle = () => {
    return (
       <View style={styles.headerContainer}>
          <Text style={[styles.headerTitle1, styles.headerTitle]}>
-            وب اپلیکیشن مدیریت
+            اپلیکیشن مدیریت
          </Text>
          <Text style={[styles.headerTitle2, styles.headerTitle]}>مخاطبین</Text>
       </View>

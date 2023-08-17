@@ -15,10 +15,13 @@ import AddContactScreen from './screens/AddContactScreen';
 import EditContactScreen from './screens/EditContactScreen';
 import ContactDetails from './screens/ContactDetails';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createNativeStackNavigator();
+
+const queryClient = new QueryClient();
 
 export default function App() {
    const [token, setToken] = useState<string | null>();
@@ -44,76 +47,78 @@ export default function App() {
          style={styles.container}
          onLayout={onLayoutRootView}
       >
-         <StatusBar style='light' />
-         <NavigationContainer>
-            <Stack.Navigator
-               screenOptions={{
-                  headerStyle: { backgroundColor: COLORS.navbar },
-                  headerTintColor: COLORS.primary,
-                  headerTitleAlign: 'center',
-                  contentStyle: { backgroundColor: COLORS.background },
-               }}
-            >
-               <Stack.Screen
-                  name='SignScreen'
-                  component={LoginScreen}
-                  initialParams={{ token: token }}
-                  options={{
-                     headerTitle: () => {
-                        return <MainHeaderTitle />;
-                     },
-                     headerBackVisible: false,
+         <QueryClientProvider client={queryClient}>
+            <StatusBar style='light' />
+            <NavigationContainer>
+               <Stack.Navigator
+                  screenOptions={{
+                     headerStyle: { backgroundColor: COLORS.navbar },
+                     headerTintColor: COLORS.primary,
+                     headerTitleAlign: 'center',
+                     contentStyle: { backgroundColor: COLORS.background },
                   }}
-               />
+               >
+                  <Stack.Screen
+                     name='SignScreen'
+                     component={LoginScreen}
+                     initialParams={{ token: token }}
+                     options={{
+                        headerTitle: () => {
+                           return <MainHeaderTitle />;
+                        },
+                        headerBackVisible: false,
+                     }}
+                  />
 
-               <Stack.Screen
-                  name='Home'
-                  component={HomeScreen}
-                  options={{
-                     headerTitle: () => {
-                        return <MainHeaderTitle />;
-                     },
-                     headerBackVisible: false,
-                     headerLeft: () => {
-                        return <LogoutButton />;
-                     },
-                  }}
-               />
+                  <Stack.Screen
+                     name='Home'
+                     component={HomeScreen}
+                     options={{
+                        headerTitle: () => {
+                           return <MainHeaderTitle />;
+                        },
+                        headerBackVisible: false,
+                        headerLeft: () => {
+                           return <LogoutButton />;
+                        },
+                     }}
+                  />
 
-               <Stack.Screen
-                  name='AddContact'
-                  component={AddContactScreen}
-                  options={{
-                     title: 'ساخت مخاطب جدید',
-                     headerBackVisible: false,
-                     animation: 'slide_from_bottom',
-                  }}
-               />
+                  <Stack.Screen
+                     name='AddContact'
+                     component={AddContactScreen}
+                     options={{
+                        title: 'ساخت مخاطب جدید',
+                        headerBackVisible: false,
+                        animation: 'slide_from_bottom',
+                     }}
+                  />
 
-               <Stack.Screen
-                  name='Details'
-                  component={ContactDetails}
-                  options={{
-                     headerTitle: () => {
-                        return <MainHeaderTitle />;
-                     },
-                     headerBackVisible: false,
-                     animation: 'slide_from_left',
-                  }}
-               />
+                  <Stack.Screen
+                     name='Details'
+                     component={ContactDetails}
+                     options={{
+                        headerTitle: () => {
+                           return <MainHeaderTitle />;
+                        },
+                        headerBackVisible: false,
+                        animation: 'slide_from_left',
+                     }}
+                  />
 
-               <Stack.Screen
-                  name='EditContact'
-                  component={EditContactScreen}
-                  options={{
-                     title: 'ویرایش مخاطب',
-                     headerTintColor: COLORS.yellowAccent,
-                     headerBackVisible: false,
-                     animation: 'slide_from_right',
-                  }}
-               />
-            </Stack.Navigator>
-         </NavigationContainer>
+                  <Stack.Screen
+                     name='EditContact'
+                     component={EditContactScreen}
+                     options={{
+                        title: 'ویرایش مخاطب',
+                        headerTintColor: COLORS.yellowAccent,
+                        headerBackVisible: false,
+                        animation: 'slide_from_right',
+                     }}
+                  />
+               </Stack.Navigator>
+            </NavigationContainer>
+         </QueryClientProvider>
       </View>
    );
 }

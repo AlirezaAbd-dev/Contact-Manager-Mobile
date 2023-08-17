@@ -5,12 +5,14 @@ import type _default from '@expo/vector-icons/build/MaterialIcons';
 import { COLORS } from '../../constants/Colors';
 import { Screens } from '../../routes';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LogoutButton = () => {
    const navigation = useNavigation<Screens>();
 
-   function logoutHandler() {
-      navigation.replace('SignScreen');
+   async function logoutHandler() {
+      await AsyncStorage.removeItem('token');
+      navigation.replace('SignScreen', { token: undefined });
    }
 
    return (
@@ -18,7 +20,8 @@ const LogoutButton = () => {
          <Pressable
             android_ripple={{ color: COLORS.error }}
             style={styles.container}
-            onPress={logoutHandler}>
+            onPress={logoutHandler}
+         >
             <MaterialIcons
                name='logout'
                size={24}

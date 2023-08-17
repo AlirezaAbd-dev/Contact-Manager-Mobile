@@ -15,7 +15,6 @@ const LoginScreen = () => {
    const token = route.params?.token;
 
    useLayoutEffect(() => {
-      console.log('exists: ' + token);
       if (token) {
          navigation.replace('Home');
       }
@@ -24,6 +23,8 @@ const LoginScreen = () => {
    return (
       <Tab.Navigator
          initialRouteName='Login'
+         layoutDirection='rtl'
+         backBehavior='initialRoute'
          screenOptions={{
             tabBarIndicatorContainerStyle: {
                backgroundColor: COLORS.background,

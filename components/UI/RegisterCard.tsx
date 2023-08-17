@@ -42,7 +42,13 @@ const RegisterCard = (props: RegisterCardType) => {
    return (
       <SignCard title={props.title}>
          {props.serverError && (
-            <Text style={{ color: COLORS.error, alignSelf: 'center' }}>
+            <Text
+               style={{
+                  color: COLORS.error,
+                  alignSelf: 'center',
+                  fontFamily: 'Vazir',
+               }}
+            >
                {props.serverError}
             </Text>
          )}

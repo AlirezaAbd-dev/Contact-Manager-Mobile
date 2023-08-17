@@ -13,8 +13,6 @@ const usePickImage = () => {
          quality: 0.5,
       });
 
-      console.log(result);
-
       if (!result.canceled) if (result.assets[0]) setImage(result.assets[0]);
    };
 

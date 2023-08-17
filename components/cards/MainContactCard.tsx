@@ -6,22 +6,19 @@ import { useNavigation } from '@react-navigation/native';
 import { Screens } from '../../routes';
 import Divider from '../UI/Divider';
 import CardDetails from '../layouts/CardDetails';
+import { Contact } from '../../APIs/contactAPIs';
 
-type MainContactCardProps = {
-   fullname: string;
-   phone: string;
-   email: string;
-   _id: string;
-   image: any;
-};
-
-const MainContactCard = (props: MainContactCardProps) => {
+const MainContactCard = (props: Contact) => {
    const navigation = useNavigation<Screens>();
 
    return (
       <View style={styles.card}>
          <Image
-            source={require('../../assets/icon.png')}
+            source={
+               props.image
+                  ? { uri: props.image }
+                  : require('../../assets/images/placeholder.jpg')
+            }
             style={styles.cardImage}
          />
          <CardDetails>
@@ -69,6 +66,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       borderRadius: 30,
       overflow: 'hidden',
+      elevation: 4,
    },
    cardImage: {
       width: '100%',

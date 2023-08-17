@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Screens } from '../../routes';
 import RegisterCard, { FormSchemaType } from '../../components/UI/RegisterCard';
+import { API_URL } from '../../env';
 
 const Signin = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +18,7 @@ const Signin = () => {
          setError('');
          setIsLoading(true);
          const response = await axios.post(
-            'https://contact-manager-ecru.vercel.app/api/signIn',
+            `${API_URL}/signIn`,
             {
                ...formData,
             },
