@@ -1,4 +1,11 @@
-import { Pressable, StyleSheet, View, Text } from 'react-native';
+import {
+   Pressable,
+   StyleSheet,
+   View,
+   Text,
+   Linking,
+   Platform,
+} from 'react-native';
 import React, { useState } from 'react';
 import Checkbox from 'react-native-bouncy-checkbox';
 
@@ -40,7 +47,8 @@ const DeleteAccount = () => {
          <Button
             disabled={!isChecked}
             withIcon={false}
-            style={styles.deleteAccountButton}>
+            style={styles.deleteAccountButton}
+         >
             حذف حساب
          </Button>
       </SignCard>

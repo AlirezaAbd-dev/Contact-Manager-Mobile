@@ -37,7 +37,8 @@ export default function App() {
    return (
       <View
          style={styles.container}
-         onLayout={onLayoutRootView}>
+         onLayout={onLayoutRootView}
+      >
          <StatusBar style='light' />
          <NavigationContainer>
             <Stack.Navigator
@@ -46,7 +47,8 @@ export default function App() {
                   headerTintColor: COLORS.primary,
                   headerTitleAlign: 'center',
                   contentStyle: { backgroundColor: COLORS.background },
-               }}>
+               }}
+            >
                <Stack.Screen
                   name='SignScreen'
                   component={LoginScreen}
@@ -54,8 +56,10 @@ export default function App() {
                      headerTitle: () => {
                         return <MainHeaderTitle />;
                      },
+                     headerBackVisible: false,
                   }}
                />
+
                <Stack.Screen
                   name='Home'
                   component={HomeScreen}

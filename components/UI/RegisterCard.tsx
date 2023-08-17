@@ -1,9 +1,9 @@
-import {
-   Pressable,
-   StyleSheet,
-   Text,
-} from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import z from 'zod';
+
 import { COLORS } from '../../constants/Colors';
 import Button from './Button';
 import CustomTextInput from './TextInput';
@@ -11,20 +11,81 @@ import SignCard from '../layouts/SignCard';
 
 type RegisterCardType = {
    title: 'ورود' | 'ثبت نام';
-   confirmHandler: () => void;
+   confirmHandler: (formData: FormSchemaType) => void;
 };
 
+const formSchema = z.object({
+   email: z
+      .string({
+         required_error: 'لطفا فیلد ایمیل را خالی نگذارید!',
+         invalid_type_error: 'لطفا از ایمیل معتبر استفاده کنید!',
+      })
+      .email({ message: 'لطفا از ایمیل معتبر استفاده کنید!' }),
+   password: z
+      .string({ required_error: 'لطفا فیلد رمز عبور را پر کنید!' })
+      .min(8, { message: 'رمز عبور باید بیشتر از 8 کاراکتر باشد!' }),
+});
+
+export type FormSchemaType = z.infer<typeof formSchema>;
+
 const RegisterCard = (props: RegisterCardType) => {
+   const { control, handleSubmit } = useForm<FormSchemaType>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+         email: '',
+         password: '',
+      },
+   });
+
    return (
       <SignCard title={props.title}>
-         <CustomTextInput
-            keyboardType='email-address'
-            focusable={true}
-            placeholder='ایمیل'
+         <Controller
+            name='email'
+            control={control}
+            rules={{ required: true }}
+            render={({ field, fieldState: { error } }) => (
+               <>
+                  <CustomTextInput
+                     onChangeText={field.onChange}
+                     onBlur={field.onBlur}
+                     value={field.value}
+                     keyboardType='email-address'
+                     focusable={true}
+                     placeholder='ایمیل'
+                     style={{
+                        borderColor: error ? COLORS.error : 'white',
+                     }}
+                  />
+                  {error?.message && (
+                     <Text style={{ color: COLORS.error }}>
+                        {error?.message}
+                     </Text>
+                  )}
+               </>
+            )}
          />
-         <CustomTextInput
-            secureTextEntry={true}
-            placeholder='رمز عبور'
+         <Controller
+            name='password'
+            control={control}
+            render={({ field, fieldState: { error } }) => (
+               <>
+                  <CustomTextInput
+                     onChangeText={field.onChange}
+                     onBlur={field.onBlur}
+                     value={field.value}
+                     secureTextEntry={true}
+                     placeholder='رمز عبور'
+                     style={{
+                        borderColor: error ? COLORS.error : 'white',
+                     }}
+                  />
+                  {error?.message && (
+                     <Text style={{ color: COLORS.error }}>
+                        {error?.message}
+                     </Text>
+                  )}
+               </>
+            )}
          />
          <Pressable style={styles.forgetPasswordPressable}>
             <Text style={styles.forgetPasswordText}>
@@ -33,8 +94,9 @@ const RegisterCard = (props: RegisterCardType) => {
          </Pressable>
          <Button
             withIcon={false}
-            onPress={props.confirmHandler}
-            style={styles.button}>
+            style={styles.button}
+            onPress={handleSubmit(props.confirmHandler)}
+         >
             {props.title}
          </Button>
       </SignCard>

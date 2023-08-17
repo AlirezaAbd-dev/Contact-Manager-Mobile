@@ -1,14 +1,16 @@
-import { StyleSheet } from 'react-native';
 import React from 'react';
-import RegisterCard from '../../components/UI/RegisterCard';
-import { useNavigation } from '@react-navigation/native';
-import { Screens } from '../../routes';
+import RegisterCard, { FormSchemaType } from '../../components/UI/RegisterCard';
+import axios from 'axios';
 
 const Login = () => {
-   const navigation = useNavigation<Screens>();
-
-   function onLoginHandler() {
-      navigation.navigate('Home');
+   async function onLoginHandler(formData: FormSchemaType) {
+      const response = await axios.post(
+         'https://contact-manager-ecru.vercel.app/api/login',
+         {
+            ...formData,
+         },
+      );
+      console.log(response);
    }
 
    return (
@@ -20,4 +22,3 @@ const Login = () => {
 };
 
 export default Login;
-

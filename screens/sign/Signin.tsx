@@ -1,13 +1,9 @@
 import React from 'react';
-import RegisterCard from '../../components/UI/RegisterCard';
-import { useNavigation } from '@react-navigation/native';
-import { Screens } from '../../routes';
+import RegisterCard, { FormSchemaType } from '../../components/UI/RegisterCard';
 
 const Signin = () => {
-   const navigation = useNavigation<Screens>();
-
-   function onSigninHandler() {
-      navigation.navigate('Home');
+   function onSigninHandler(formData: FormSchemaType) {
+      console.log(formData);
    }
    return (
       <RegisterCard
