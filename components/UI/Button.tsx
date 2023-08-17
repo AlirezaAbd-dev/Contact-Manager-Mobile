@@ -6,9 +6,11 @@ import {
    TextStyle,
    View,
    ViewStyle,
+   ActivityIndicator,
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
+
 import { COLORS } from '../../constants/Colors';
 
 type ButtonProps = {
@@ -18,6 +20,8 @@ type ButtonProps = {
    textStyle?: StyleProp<TextStyle>;
    rippleColor?: string;
    disabled?: boolean;
+   isLoading?: boolean;
+   spinnerColor?: string;
 } & (
    | {
         withIcon: true;
@@ -35,29 +39,46 @@ const Button = ({ ...props }: ButtonProps) => {
          style={[
             styles.outerContainer,
             props.style,
-            props.disabled && styles.disabled,
-         ]}>
+            (props.disabled || props.isLoading) && styles.disabled,
+         ]}
+      >
          <Pressable
-            disabled={props.disabled}
+            disabled={props.disabled || props.isLoading}
             style={[styles.container]}
             android_ripple={{
                color: props.rippleColor || COLORS.rippleSecondary,
             }}
-            onPress={props.onPress}>
-            {props.withIcon && props.icon && props.iconAlign === 'Left' && (
-               <MaterialIcons
-                  name={props.icon}
-                  color={props.iconColor}
-                  size={props.iconSize}
+            onPress={props.onPress}
+         >
+            {props.isLoading ? (
+               <ActivityIndicator
+                  color={props.spinnerColor}
+                  size={'small'}
                />
-            )}
-            <Text style={[styles.text, props.textStyle]}>{props.children}</Text>
-            {props.withIcon && props.icon && props.iconAlign === 'Right' && (
-               <MaterialIcons
-                  name={props.icon}
-                  color={props.iconColor}
-                  size={props.iconSize}
-               />
+            ) : (
+               <>
+                  {props.withIcon &&
+                     props.icon &&
+                     props.iconAlign === 'Left' && (
+                        <MaterialIcons
+                           name={props.icon}
+                           color={props.iconColor}
+                           size={props.iconSize}
+                        />
+                     )}
+                  <Text style={[styles.text, props.textStyle]}>
+                     {props.children}
+                  </Text>
+                  {props.withIcon &&
+                     props.icon &&
+                     props.iconAlign === 'Right' && (
+                        <MaterialIcons
+                           name={props.icon}
+                           color={props.iconColor}
+                           size={props.iconSize}
+                        />
+                     )}
+               </>
             )}
          </Pressable>
       </View>

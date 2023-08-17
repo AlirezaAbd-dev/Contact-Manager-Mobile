@@ -11,6 +11,8 @@ import SignCard from '../layouts/SignCard';
 
 type RegisterCardType = {
    title: 'ورود' | 'ثبت نام';
+   isLoading: boolean;
+   serverError: string;
    confirmHandler: (formData: FormSchemaType) => void;
 };
 
@@ -39,6 +41,11 @@ const RegisterCard = (props: RegisterCardType) => {
 
    return (
       <SignCard title={props.title}>
+         {props.serverError && (
+            <Text style={{ color: COLORS.error, alignSelf: 'center' }}>
+               {props.serverError}
+            </Text>
+         )}
          <Controller
             name='email'
             control={control}
@@ -95,6 +102,8 @@ const RegisterCard = (props: RegisterCardType) => {
          <Button
             withIcon={false}
             style={styles.button}
+            isLoading={props.isLoading}
+            spinnerColor={COLORS.secondary}
             onPress={handleSubmit(props.confirmHandler)}
          >
             {props.title}

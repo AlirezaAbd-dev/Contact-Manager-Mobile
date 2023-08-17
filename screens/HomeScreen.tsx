@@ -1,10 +1,11 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 
 import MainContactCard from '../components/cards/MainContactCard';
 import Button from '../components/UI/Button';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from '../routes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DUMMYDATA = [
    {
@@ -46,6 +47,13 @@ const DUMMYDATA = [
 const HomeScreen = () => {
    const navigation = useNavigation<Screens>();
 
+   useLayoutEffect(() => {
+      (async () => {
+         const token = await AsyncStorage.getItem('token');
+         console.log('token: ' + token);
+      })();
+   }, []);
+
    return (
       <ScrollView style={styles.container}>
          <Button
@@ -57,7 +65,8 @@ const HomeScreen = () => {
             style={styles.addNewContactButton}
             onPress={() => {
                navigation.navigate('AddContact');
-            }}>
+            }}
+         >
             ساخت مخاطب جدید
          </Button>
          {DUMMYDATA.map((item, index) => (
