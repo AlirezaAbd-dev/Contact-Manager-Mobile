@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text } from 'react-native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -13,7 +13,6 @@ import { z } from 'zod';
 import { editContactValidation } from '../../validation/editContactValidation';
 import { useMutation } from 'react-query';
 import useToken from '../../hooks/useToken';
-import { isLoaded } from 'expo-font';
 import Error from '../UI/Error';
 
 type FormProps = (FullContact | undefined) & {

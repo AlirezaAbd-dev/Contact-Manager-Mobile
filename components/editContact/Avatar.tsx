@@ -1,5 +1,5 @@
 import { Image, StyleSheet, View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { ImagePickerAsset } from 'expo-image-picker';
 import { uploadAsync, FileSystemUploadType } from 'expo-file-system';
 
@@ -8,6 +8,8 @@ import { API_URL } from '../../env';
 import useToken from '../../hooks/useToken';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from '../../routes';
+import Error from '../UI/Error';
+import { COLORS } from '../../constants/Colors';
 
 type AvatarProps = {
    image: ImagePickerAsset | null | undefined;
@@ -16,6 +18,9 @@ type AvatarProps = {
 };
 
 const Avatar = (props: AvatarProps) => {
+   const [isLoading, setIsLoading] = useState(false);
+   const [error, setError] = useState('');
+
    const token = useToken();
    const navigation = useNavigation<Screens>();
 
@@ -23,10 +28,9 @@ const Avatar = (props: AvatarProps) => {
       if (props.image) {
          const arr = props.image?.uri.split('/');
          if (arr) {
-            console.log('uploading');
-
             try {
-               const response = await uploadAsync(
+               setIsLoading(true);
+               await uploadAsync(
                   `${API_URL}/imageUpload/${props.id}`,
                   props.image.uri,
                   {
@@ -35,10 +39,16 @@ const Avatar = (props: AvatarProps) => {
                      fieldName: 'image',
                   },
                );
+               setIsLoading(false);
 
                navigation.replace('Home');
-            } catch (err) {
-               console.error(err);
+            } catch (err: any) {
+               setIsLoading(false);
+               if (err.response) {
+                  setError(err.response.data.message);
+               } else {
+                  setError(err.message);
+               }
             }
          }
       }
@@ -57,11 +67,15 @@ const Avatar = (props: AvatarProps) => {
                      : require('../../assets/images/placeholder.jpg')
                }
             />
+
+            {error && <Error errorMessage={error} />}
             {props.image && (
                <Button
                   style={styles.buttons}
                   withIcon={false}
                   onPress={onImageUploadHandler}
+                  isLoading={isLoading}
+                  spinnerColor={COLORS.primary}
                >
                   بارگذاری عکس
                </Button>
