@@ -14,20 +14,13 @@ import { editContactValidation } from '../../validation/editContactValidation';
 import { useMutation } from 'react-query';
 import useToken from '../../hooks/useToken';
 import Error from '../UI/Error';
+import ErrorText from '../UI/ErrorText';
 
 type FormProps = (FullContact | undefined) & {
    pickImage: () => Promise<void>;
 };
 
 export type EditContactSchemaType = z.infer<typeof editContactValidation>;
-
-const ErrorText = (props: { text: string }) => {
-   return (
-      <Text style={{ fontFamily: 'Vazir', color: COLORS.error }}>
-         {props.text}
-      </Text>
-   );
-};
 
 const Form = (props: FormProps) => {
    const token = useToken();

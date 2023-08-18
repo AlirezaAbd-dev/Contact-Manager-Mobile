@@ -4,6 +4,7 @@ import { Control, Controller } from 'react-hook-form';
 import CustomTextInput from '../UI/TextInput';
 import { EditContactSchemaType } from '../editContact/Form';
 import Button from '../UI/Button';
+import ErrorText from '../UI/ErrorText';
 
 type FormProps = {
    control: Control<EditContactSchemaType, any>;
@@ -17,27 +18,53 @@ const Form = (props: FormProps) => {
             name='fullname'
             control={props.control}
             render={({ field, fieldState }) => (
-               <CustomTextInput placeholder='نام و نام خانوادگی' />
+               <>
+                  <CustomTextInput
+                     placeholder='نام و نام خانوادگی'
+                     onBlur={field.onBlur}
+                     onChangeText={field.onChange}
+                     value={field.value}
+                  />
+                  {fieldState.error && (
+                     <ErrorText text={fieldState.error.message as string} />
+                  )}
+               </>
             )}
          />
          <Controller
             name='phone'
             control={props.control}
             render={({ field, fieldState }) => (
-               <CustomTextInput
-                  placeholder='شماره موبایل'
-                  keyboardType='number-pad'
-               />
+               <>
+                  <CustomTextInput
+                     placeholder='شماره موبایل'
+                     keyboardType='number-pad'
+                     onBlur={field.onBlur}
+                     onChangeText={field.onChange}
+                     value={field.value}
+                  />
+                  {fieldState.error && (
+                     <ErrorText text={fieldState.error.message as string} />
+                  )}
+               </>
             )}
          />
          <Controller
             name='email'
             control={props.control}
             render={({ field, fieldState }) => (
-               <CustomTextInput
-                  placeholder='آدرس ایمیل'
-                  keyboardType='email-address'
-               />
+               <>
+                  <CustomTextInput
+                     placeholder='آدرس ایمیل'
+                     keyboardType='email-address'
+                     onBlur={field.onBlur}
+                     onChangeText={field.onChange}
+                     value={field.value}
+                  />
+                  {fieldState.error && (
+                     <ErrorText text={fieldState.error.message as string} />
+                  )}
+               </>
             )}
          />
          <View style={styles.lastInputSection}>
@@ -52,10 +79,18 @@ const Form = (props: FormProps) => {
                name='job'
                control={props.control}
                render={({ field, fieldState }) => (
-                  <CustomTextInput
-                     style={styles.jobInput}
-                     placeholder='شغل'
-                  />
+                  <>
+                     <CustomTextInput
+                        style={styles.jobInput}
+                        placeholder='شغل'
+                        onBlur={field.onBlur}
+                        onChangeText={field.onChange}
+                        value={field.value}
+                     />
+                     {fieldState.error && (
+                        <ErrorText text={fieldState.error.message as string} />
+                     )}
+                  </>
                )}
             />
          </View>

@@ -4,10 +4,11 @@ import {
    View,
    KeyboardAvoidingView,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { uploadAsync, FileSystemUploadType } from 'expo-file-system';
 
 import Button from '../components/UI/Button';
 import { COLORS } from '../constants/Colors';
@@ -16,9 +17,18 @@ import { EditContactSchemaType } from '../components/editContact/Form';
 import { editContactValidation } from '../validation/editContactValidation';
 import Avatar from '../components/addContact/Avatar';
 import Form from '../components/addContact/Form';
+import { API_URL } from '../env';
+import useToken from '../hooks/useToken';
+import axios from 'axios';
+import { Screens } from '../routes';
+import Error from '../components/UI/Error';
 
 const AddContactScreen = () => {
-   const navigation = useNavigation();
+   const token = useToken();
+   const navigation = useNavigation<Screens>();
+
+   const [isLoading, setIsLoading] = useState(false);
+   const [error, setError] = useState('');
 
    const { image, pickImage } = usePickImage();
 
@@ -26,21 +36,55 @@ const AddContactScreen = () => {
       resolver: zodResolver(editContactValidation),
    });
 
-   function onSubmitHandler(data: EditContactSchemaType) {
-      console.log(data);
+   async function onSubmitHandler(data: EditContactSchemaType) {
+      try {
+         const url = `${API_URL}/contact`;
+         const HEADERS = {
+            'x-authentication-token': token as string,
+         };
+         if (image) {
+            await uploadAsync(url, image?.uri, {
+               fieldName: 'image',
+               headers: HEADERS,
+               uploadType: FileSystemUploadType.MULTIPART,
+               parameters: { ...data },
+            });
+         } else {
+            const formData = new FormData();
+            formData.append('fullname', data.fullname);
+            formData.append('phone', data.phone);
+            formData.append('email', data?.email || '');
+            formData.append('job', data?.job || '');
+
+            await axios.post(url, data, {
+               headers: HEADERS,
+            });
+         }
+
+         navigation.replace('Home');
+      } catch (err: any) {
+         setIsLoading(false);
+         if (err.response) {
+            setError(err.response.data.message);
+         } else {
+            setError(err.message);
+         }
+      }
    }
 
    return (
-      <KeyboardAvoidingView
-         style={{ flex: 1 }}
-         behavior='position'
-         contentContainerStyle={{ flex: 1 }}
-      >
-         <ScrollView style={styles.container}>
+      <ScrollView style={styles.container}>
+         <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior='position'
+            contentContainerStyle={{ flex: 1 }}
+         >
             <Avatar image={image} />
 
             {/* //? AVATAR SECTION */}
             <View style={styles.inputContainer}>
+               {error && <Error errorMessage={error} />}
+
                {/* //? FORM SECTION */}
                <Form
                   control={control}
@@ -53,6 +97,8 @@ const AddContactScreen = () => {
                      style={[styles.button, styles.confirmButton]}
                      withIcon={false}
                      onPress={handleSubmit(onSubmitHandler)}
+                     isLoading={isLoading}
+                     spinnerColor={COLORS.primary}
                   >
                      ساخت مخاطب
                   </Button>
@@ -66,8 +112,8 @@ const AddContactScreen = () => {
                   </Button>
                </View>
             </View>
-         </ScrollView>
-      </KeyboardAvoidingView>
+         </KeyboardAvoidingView>
+      </ScrollView>
    );
 };
 
