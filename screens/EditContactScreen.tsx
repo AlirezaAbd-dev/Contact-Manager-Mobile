@@ -1,20 +1,17 @@
 import {
    ScrollView,
    StyleSheet,
-   Image,
-   View,
    KeyboardAvoidingView,
    ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { useQuery } from 'react-query';
+
 import { EditContactScreenParams, Screens } from '../routes';
 import { COLORS } from '../constants/Colors';
-import CustomTextInput from '../components/UI/TextInput';
-import Button from '../components/UI/Button';
 import usePickImage from '../hooks/usePickImage';
 import Card from '../components/layouts/Card';
-import { useQuery } from 'react-query';
 import { FullContact, getContactById } from '../APIs/contactAPIs';
 import useToken from '../hooks/useToken';
 import Error from '../components/UI/Error';
@@ -77,25 +74,6 @@ const EditContactScreen = () => {
                   {...(data as FullContact)}
                   pickImage={pickImage}
                />
-
-               {/* //? BUTTONS SECTION */}
-               <View style={styles.buttonsContainer}>
-                  <Button
-                     rippleColor={COLORS.ripplePrimary}
-                     style={[styles.buttons, styles.confirmButton]}
-                     withIcon={false}
-                  >
-                     ویرایش مخاطب
-                  </Button>
-                  <Button
-                     rippleColor={COLORS.rippleError}
-                     style={[styles.buttons, styles.cancelButton]}
-                     withIcon={false}
-                     onPress={navigation.goBack}
-                  >
-                     انصراف
-                  </Button>
-               </View>
             </Card>
          </KeyboardAvoidingView>
       </ScrollView>
@@ -108,20 +86,5 @@ const styles = StyleSheet.create({
    container: {
       flex: 1,
       margin: 20,
-   },
-   buttonsContainer: {
-      flexDirection: 'row',
-      gap: 8,
-      justifyContent: 'flex-end',
-      marginTop: 20,
-   },
-   buttons: {
-      borderRadius: 20,
-   },
-   confirmButton: {
-      backgroundColor: COLORS.primary,
-   },
-   cancelButton: {
-      backgroundColor: COLORS.error,
    },
 });
