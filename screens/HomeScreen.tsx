@@ -17,7 +17,7 @@ import Error from '../components/UI/Error';
 
 const HomeScreen = () => {
    const token = useToken();
-   const { data, isLoading, isError, error, refetch } = useQuery(
+   const { data, isLoading, isError, error, refetch, isFetching } = useQuery(
       ['contacts', token],
       getContactsAPI,
    );
@@ -57,7 +57,7 @@ const HomeScreen = () => {
                data={data}
                refreshControl={
                   <RefreshControl
-                     refreshing={isLoading}
+                     refreshing={isFetching}
                      onRefresh={refetch}
                      colors={[COLORS.primary]}
                      progressBackgroundColor={COLORS.background}
