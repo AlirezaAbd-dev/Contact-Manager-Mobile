@@ -1,5 +1,4 @@
 import {
-   Image,
    ScrollView,
    StyleSheet,
    View,
@@ -7,68 +6,62 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-import CustomTextInput from '../components/UI/TextInput';
 import Button from '../components/UI/Button';
 import { COLORS } from '../constants/Colors';
 import usePickImage from '../hooks/usePickImage';
+import { EditContactSchemaType } from '../components/editContact/Form';
+import { editContactValidation } from '../validation/editContactValidation';
+import Avatar from '../components/addContact/Avatar';
+import Form from '../components/addContact/Form';
 
 const AddContactScreen = () => {
    const navigation = useNavigation();
 
    const { image, pickImage } = usePickImage();
 
+   const { control, handleSubmit } = useForm<EditContactSchemaType>({
+      resolver: zodResolver(editContactValidation),
+   });
+
+   function onSubmitHandler(data: EditContactSchemaType) {
+      console.log(data);
+   }
+
    return (
       <KeyboardAvoidingView
          style={{ flex: 1 }}
          behavior='position'
-         contentContainerStyle={{ flex: 1 }}>
+         contentContainerStyle={{ flex: 1 }}
+      >
          <ScrollView style={styles.container}>
-            {image ? (
-               <Image
-                  source={{ uri: image.uri }}
-                  style={styles.pickedImage}
-               />
-            ) : (
-               <Image
-                  style={styles.headerImage}
-                  source={require('../assets/images/man-taking-note.png')}
-               />
-            )}
+            <Avatar image={image} />
+
+            {/* //? AVATAR SECTION */}
             <View style={styles.inputContainer}>
-               <CustomTextInput placeholder='نام و نام خانوادگی' />
-               <CustomTextInput
-                  placeholder='شماره موبایل'
-                  keyboardType='number-pad'
+               {/* //? FORM SECTION */}
+               <Form
+                  control={control}
+                  pickImage={pickImage}
                />
-               <CustomTextInput
-                  placeholder='آدرس ایمیل'
-                  keyboardType='email-address'
-               />
-               <View style={styles.lastInputSection}>
-                  <Button
-                     style={[styles.button]}
-                     withIcon={false}
-                     onPress={pickImage}>
-                     انتخاب عکس
-                  </Button>
-                  <CustomTextInput
-                     style={styles.jobInput}
-                     placeholder='شغل'
-                  />
-               </View>
+
                <View style={styles.buttonsContainer}>
                   <Button
                      rippleColor={COLORS.ripplePrimary}
                      style={[styles.button, styles.confirmButton]}
-                     withIcon={false}>
+                     withIcon={false}
+                     onPress={handleSubmit(onSubmitHandler)}
+                  >
                      ساخت مخاطب
                   </Button>
                   <Button
                      rippleColor={COLORS.rippleError}
                      style={[styles.button, styles.cancelButton]}
                      withIcon={false}
-                     onPress={navigation.goBack}>
+                     onPress={navigation.goBack}
+                  >
                      انصراف
                   </Button>
                </View>
@@ -94,19 +87,6 @@ const styles = StyleSheet.create({
       gap: 8,
       alignItems: 'center',
       paddingRight: 1,
-   },
-   headerImage: {
-      width: '80%',
-      height: 'auto',
-      aspectRatio: 16 / 9,
-      alignSelf: 'center',
-   },
-   pickedImage: {
-      width: 200,
-      height: 'auto',
-      aspectRatio: 1 / 1,
-      borderRadius: 100,
-      alignSelf: 'center',
    },
    buttonsContainer: {
       marginTop: 10,
