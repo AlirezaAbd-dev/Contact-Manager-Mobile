@@ -46,8 +46,8 @@ export const ContactDetails = () => {
       );
    }
 
-   {
-      !isLoading && isError && (
+   if (!isLoading && isError) {
+      return (
          <Error
             errorMessage={
                (error as any).response.data.message || (error as any).message
