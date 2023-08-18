@@ -1,27 +1,26 @@
 import { StyleSheet, View, Text } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import CustomTextInput from '../UI/TextInput';
 import Button from '../UI/Button';
-import { FullContact } from '../../APIs/contactAPIs';
+import { FullContact, editContactById } from '../../APIs/contactAPIs';
 import { COLORS } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from '../../routes';
 import { z } from 'zod';
+import { editContactValidation } from '../../validation/editContactValidation';
+import { useMutation } from 'react-query';
+import useToken from '../../hooks/useToken';
+import { isLoaded } from 'expo-font';
+import Error from '../UI/Error';
 
 type FormProps = (FullContact | undefined) & {
    pickImage: () => Promise<void>;
 };
-const formSchema = z.object({
-   fullname: z.string().min(3),
-   phone: z.string().min(8).max(12),
-   email: z.string().email().optional(),
-   job: z.string().min(2).optional(),
-});
 
-export type EditContactSchemaType = z.infer<typeof formSchema>;
+export type EditContactSchemaType = z.infer<typeof editContactValidation>;
 
 const ErrorText = (props: { text: string }) => {
    return (
@@ -32,14 +31,29 @@ const ErrorText = (props: { text: string }) => {
 };
 
 const Form = (props: FormProps) => {
+   const token = useToken();
    const navigation = useNavigation<Screens>();
    const { control, handleSubmit } = useForm<EditContactSchemaType>({
-      resolver: zodResolver(formSchema),
+      resolver: zodResolver(editContactValidation),
+      values: {
+         fullname: props.fullname,
+         phone: props.phone,
+         email: props.email,
+         job: props.job,
+      },
+   });
+   const mutation = useMutation({
+      mutationFn: editContactById,
+      mutationKey: `editContact:${props._id}`,
+      onSuccess: (_, __, context) => {
+         navigation.replace('Home');
+      },
    });
 
    function onSubmitHandler(data: EditContactSchemaType) {
-      console.log(data);
+      mutation.mutate({ ...data, id: props._id, token: token as string });
    }
+
    return (
       <>
          <View style={styles.inputsContainer}>
@@ -53,7 +67,6 @@ const Form = (props: FormProps) => {
                         onBlur={field.onBlur}
                         value={field.value}
                         placeholder='نام و نام خانوادگی'
-                        defaultValue={props?.fullname}
                      />
                      {fieldState.error?.message && (
                         <ErrorText text={fieldState.error.message} />
@@ -72,7 +85,6 @@ const Form = (props: FormProps) => {
                         value={field.value}
                         keyboardType='number-pad'
                         placeholder='شماره موبایل'
-                        defaultValue={props?.phone}
                      />
                      {fieldState.error?.message && (
                         <ErrorText text={fieldState.error.message} />
@@ -91,7 +103,6 @@ const Form = (props: FormProps) => {
                         value={field.value}
                         placeholder='آدرس ایمیل'
                         keyboardType='email-address'
-                        defaultValue={props?.email || ''}
                      />
                      {fieldState.error?.message && (
                         <ErrorText text={fieldState.error.message} />
@@ -118,7 +129,6 @@ const Form = (props: FormProps) => {
                            value={field.value}
                            style={styles.jobInput}
                            placeholder='شغل'
-                           defaultValue={props?.job}
                         />
                         {fieldState.error?.message && (
                            <ErrorText text={fieldState.error.message} />
@@ -128,12 +138,22 @@ const Form = (props: FormProps) => {
                />
             </View>
          </View>
+         {!mutation.isLoading && mutation.isError && (
+            <Error
+               errorMessage={
+                  ((mutation.error as any).data.message as string) ||
+                  ((mutation.error as any).message as string)
+               }
+            />
+         )}
          <View style={styles.buttonsContainer}>
             <Button
                rippleColor={COLORS.ripplePrimary}
                style={[styles.buttons, styles.confirmButton]}
                withIcon={false}
                onPress={handleSubmit(onSubmitHandler)}
+               isLoading={mutation.isLoading}
+               spinnerColor={COLORS.primary}
             >
                ویرایش مخاطب
             </Button>

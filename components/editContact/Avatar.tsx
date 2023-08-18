@@ -17,8 +17,9 @@ const Avatar = (props: AvatarProps) => {
                source={
                   props.image
                      ? { uri: props.image.uri }
-                     : { uri: props.fetchedImage } ||
-                       require('../../assets/images/placeholder.jpg')
+                     : props.fetchedImage
+                     ? { uri: props.fetchedImage }
+                     : require('../../assets/images/placeholder.jpg')
                }
             />
             {props.image && (

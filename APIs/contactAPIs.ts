@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 import { API_URL } from '../env';
-import { QueryFunction } from 'react-query';
+import { MutationFunction, QueryFunction } from 'react-query';
+import { EditContactSchemaType } from '../components/editContact/Form';
 
 export type FullContact = {
    _id: string;
@@ -48,5 +49,33 @@ export const getContactById: QueryFunction<
       });
 
       return response.data.contact;
+   }
+};
+
+export const editContactById: MutationFunction<
+   FullContact | undefined,
+   EditContactSchemaType & { token: string | undefined; id: string }
+> = async (data) => {
+   const id = data.id;
+
+   const passingData: EditContactSchemaType = {
+      fullname: data.fullname,
+      phone: data.phone,
+      email: data.email,
+      job: data.job,
+   };
+
+   if (data.token) {
+      const response = await axios.put(
+         `${API_URL}/contact/${id}`,
+         { ...passingData },
+         {
+            headers: {
+               'x-authentication-token': data.token,
+            },
+         },
+      );
+
+      return response.data as FullContact;
    }
 };

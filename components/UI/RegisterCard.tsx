@@ -8,6 +8,7 @@ import { COLORS } from '../../constants/Colors';
 import Button from './Button';
 import CustomTextInput from './TextInput';
 import SignCard from '../layouts/SignCard';
+import { signValidation } from '../../validation/signValidation';
 
 type RegisterCardType = {
    title: 'ورود' | 'ثبت نام';
@@ -16,23 +17,11 @@ type RegisterCardType = {
    confirmHandler: (formData: FormSchemaType) => void;
 };
 
-const formSchema = z.object({
-   email: z
-      .string({
-         required_error: 'لطفا فیلد ایمیل را خالی نگذارید!',
-         invalid_type_error: 'لطفا از ایمیل معتبر استفاده کنید!',
-      })
-      .email({ message: 'لطفا از ایمیل معتبر استفاده کنید!' }),
-   password: z
-      .string({ required_error: 'لطفا فیلد رمز عبور را پر کنید!' })
-      .min(8, { message: 'رمز عبور باید بیشتر از 8 کاراکتر باشد!' }),
-});
-
-export type FormSchemaType = z.infer<typeof formSchema>;
+export type FormSchemaType = z.infer<typeof signValidation>;
 
 const RegisterCard = (props: RegisterCardType) => {
    const { control, handleSubmit } = useForm<FormSchemaType>({
-      resolver: zodResolver(formSchema),
+      resolver: zodResolver(signValidation),
       defaultValues: {
          email: '',
          password: '',
@@ -65,6 +54,7 @@ const RegisterCard = (props: RegisterCardType) => {
             render={({ field, fieldState: { error } }) => (
                <>
                   <CustomTextInput
+                     autoComplete='email'
                      onChangeText={field.onChange}
                      onBlur={field.onBlur}
                      value={field.value}
