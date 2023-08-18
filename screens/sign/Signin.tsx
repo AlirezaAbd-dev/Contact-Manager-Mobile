@@ -32,10 +32,12 @@ const Signin = () => {
          navigation.replace('Home');
       } catch (err: any) {
          setIsLoading(false);
-         if (err.response) {
+         if (!err.response) {
+            setError('مشکلی در برقراری ارتباط پیش آمد، دوباره تلاش کنید!');
+            return;
+         } else {
             return setError(err?.response?.data?.message);
          }
-         setError(err.message);
       }
    }
    return (
