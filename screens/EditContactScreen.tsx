@@ -67,6 +67,7 @@ const EditContactScreen = () => {
                <Avatar
                   image={image}
                   fetchedImage={data?.image}
+                  id={data?._id as string}
                />
 
                {/* //? FORM SECTION */}

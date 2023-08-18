@@ -29,7 +29,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-tab-view": "^3.5.2",
     "react-query": "^3.39.3",
-    "zod": "^3.22.1"
+    "zod": "^3.22.1",
+    "expo-file-system": "~15.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

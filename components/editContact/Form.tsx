@@ -45,7 +45,7 @@ const Form = (props: FormProps) => {
    const mutation = useMutation({
       mutationFn: editContactById,
       mutationKey: `editContact:${props._id}`,
-      onSuccess: (_, __, context) => {
+      onSuccess: () => {
          navigation.replace('Home');
       },
    });
