@@ -1,5 +1,5 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
-import React from 'react';
+import { Pressable, StyleSheet, Text, Vibration } from 'react-native';
+import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
@@ -38,6 +38,12 @@ const RegisterCard = (props: RegisterCardType) => {
          password: '',
       },
    });
+
+   useEffect(() => {
+      if (props.serverError) {
+         Vibration.vibrate();
+      }
+   }, [props.serverError]);
 
    return (
       <SignCard title={props.title}>

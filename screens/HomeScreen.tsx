@@ -4,6 +4,7 @@ import {
    StyleSheet,
    View,
    Text,
+   RefreshControl,
 } from 'react-native';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -16,11 +17,10 @@ import Error from '../components/UI/Error';
 
 const HomeScreen = () => {
    const token = useToken();
-   const { data, isLoading, isError, error } = useQuery(
+   const { data, isLoading, isError, error, refetch } = useQuery(
       ['contacts', token],
       getContactsAPI,
    );
-
    return (
       <View style={styles.container}>
          {isLoading && (
@@ -53,8 +53,16 @@ const HomeScreen = () => {
 
          {!isLoading && data && data.length > 0 && (
             <FlatList
-               style={{ flex: 1, paddingBottom: 100 }}
+               style={{ flex: 1 }}
                data={data}
+               refreshControl={
+                  <RefreshControl
+                     refreshing={isLoading}
+                     onRefresh={refetch}
+                     colors={[COLORS.primary]}
+                     progressBackgroundColor={COLORS.background}
+                  />
+               }
                keyExtractor={(item) => item._id}
                renderItem={({ item }) => {
                   return (
