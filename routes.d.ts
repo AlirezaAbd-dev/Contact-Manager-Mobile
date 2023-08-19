@@ -2,7 +2,7 @@ import { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type Routes = {
-   SignScreen: { token?: string };
+   SignScreen: undefined;
    Home: undefined;
    AddContact: undefined;
    EditContact: { id: string };

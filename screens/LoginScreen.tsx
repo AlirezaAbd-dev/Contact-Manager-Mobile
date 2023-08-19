@@ -3,15 +3,15 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Login from './sign/Login';
 import Signin from './sign/Signin';
 import { COLORS } from '../constants/Colors';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { Screens, SignScreenParams } from '../routes';
+import { useNavigation } from '@react-navigation/native';
+import { Screens } from '../routes';
+import useToken from '../hooks/useToken';
 
 const Tab = createMaterialTopTabNavigator();
 
 const LoginScreen = () => {
    const navigation = useNavigation<Screens>();
-   const route = useRoute<SignScreenParams>();
-   const token = route.params?.token;
+   const token = useToken();
 
    useLayoutEffect(() => {
       if (token) {
