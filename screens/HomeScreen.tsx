@@ -5,6 +5,7 @@ import {
    View,
    Text,
    RefreshControl,
+   Image,
 } from 'react-native';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -14,9 +15,14 @@ import { getContactsAPI } from '../APIs/contactAPIs';
 import useToken from '../hooks/useToken';
 import { COLORS } from '../constants/Colors';
 import Error from '../components/UI/Error';
+import Button from '../components/UI/Button';
+import { useNavigation } from '@react-navigation/native';
+import { Screens } from '../routes';
 
 const HomeScreen = () => {
    const token = useToken();
+   const navigation = useNavigation<Screens>();
+
    const { data, isLoading, isError, error, refetch, isFetching } = useQuery(
       ['contacts', token],
       getContactsAPI,
@@ -40,15 +46,33 @@ const HomeScreen = () => {
          )}
 
          {!isLoading && data?.length === 0 && (
-            <Text
-               style={{
-                  color: 'white',
-                  fontFamily: 'Vazir',
-                  alignSelf: 'center',
-               }}
-            >
-               شما در حال حاظر هیچ مخاطبی را ثبت نکرده اید.
-            </Text>
+            <>
+               <Image
+                  source={require('../assets/images/404_test_1a.gif')}
+                  style={{ width: '100%', height: 'auto', aspectRatio: 16 / 9 }}
+               />
+               <Text
+                  style={{
+                     color: 'white',
+                     fontFamily: 'Vazir',
+                     alignSelf: 'center',
+                     marginTop: 10,
+                  }}
+               >
+                  شما در حال حاظر هیچ مخاطبی را ثبت نکرده اید.
+               </Text>
+               <Button
+                  withIcon={false}
+                  style={{
+                     borderRadius: 20,
+                     alignSelf: 'center',
+                     marginTop: 30,
+                  }}
+                  onPress={() => navigation.navigate('AddContact')}
+               >
+                  ساخت مخاطب جدید
+               </Button>
+            </>
          )}
 
          {!isLoading && data && data.length > 0 && (

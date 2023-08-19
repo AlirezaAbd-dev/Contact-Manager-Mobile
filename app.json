@@ -9,7 +9,7 @@
       "backgroundColor": "#282a36",
       "splash": {
          "image": "./assets/splash.png",
-         "resizeMode": "contain",
+         "resizeMode": "cover",
          "backgroundColor": "#282a36"
       },
       "assetBundlePatterns": ["**/*"],
@@ -18,12 +18,11 @@
       },
       "android": {
          "adaptiveIcon": {
-            "foregroundImage": "./assets/adaptive-icon.png",
+            "foregroundImage": "./assets/icon.png",
             "backgroundColor": "#282a36"
-         }
-      },
-      "web": {
-         "favicon": "./assets/favicon.png"
+         },
+         "permissions": ["android.permission.RECORD_AUDIO"],
+         "package": "com.a.r.a.contactmanagermobile"
       },
       "plugins": [
          [
@@ -32,6 +31,11 @@
                "photosPermission": "You need to give access to gallery to pick an image."
             }
          ]
-      ]
+      ],
+      "extra": {
+         "eas": {
+            "projectId": "b3a0e42f-353f-478f-b8b6-60cd80af1157"
+         }
+      }
    }
 }
