@@ -7,7 +7,7 @@ import {
    RefreshControl,
    Image,
 } from 'react-native';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useQuery } from 'react-query';
 
 import MainContactCard from '../components/cards/MainContactCard';
@@ -22,6 +22,12 @@ import { Screens } from '../routes';
 const HomeScreen = () => {
    const token = useToken();
    const navigation = useNavigation<Screens>();
+
+   useLayoutEffect(() => {
+      if (!token) {
+         navigation.replace('SignScreen');
+      }
+   }, [token]);
 
    const { data, isLoading, isError, error, refetch, isFetching } = useQuery(
       ['contacts', token],

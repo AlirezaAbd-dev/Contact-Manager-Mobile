@@ -16,14 +16,17 @@ import AddContactScreen from './screens/AddContactScreen';
 import EditContactScreen from './screens/EditContactScreen';
 import ContactDetails from './screens/ContactDetails';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import useToken from './hooks/useToken';
+import { Routes } from './routes';
 
 SplashScreen.preventAutoHideAsync();
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<Routes>();
 
 const queryClient = new QueryClient();
 
 export default function App() {
+   const token = useToken();
    const [fontsLoaded] = useFonts({
       Vazir: require('./assets/fonts/Vazir.ttf'),
    });
@@ -47,6 +50,7 @@ export default function App() {
             <StatusBar style='light' />
             <NavigationContainer>
                <Stack.Navigator
+                  initialRouteName={token ? 'Home' : 'SignScreen'}
                   screenOptions={{
                      headerStyle: { backgroundColor: COLORS.navbar },
                      headerTintColor: COLORS.primary,
