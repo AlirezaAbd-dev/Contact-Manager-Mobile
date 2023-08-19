@@ -50,12 +50,6 @@ const AddContactScreen = () => {
                parameters: { ...data },
             });
          } else {
-            const formData = new FormData();
-            formData.append('fullname', data.fullname);
-            formData.append('phone', data.phone);
-            formData.append('email', data?.email || '');
-            formData.append('job', data?.job || '');
-
             await axios.post(url, data, {
                headers: HEADERS,
             });
