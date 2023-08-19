@@ -5,6 +5,11 @@ import Modal from 'react-native-modal';
 import { COLORS } from '../../constants/Colors';
 import Button from '../UI/Button';
 import IconButton from '../UI/IconButton';
+import { useMutation } from 'react-query';
+import { deleteContactById } from '../../APIs/contactAPIs';
+import useToken from '../../hooks/useToken';
+import { useNavigation } from '@react-navigation/native';
+import { Screens } from '../../routes';
 
 type DeleteModalProps = {
    isModalOpen: boolean;
@@ -13,6 +18,23 @@ type DeleteModalProps = {
 };
 
 const DeleteModal = (props: DeleteModalProps) => {
+   const token = useToken();
+   const navigation = useNavigation<Screens>();
+
+   const mutation = useMutation(
+      ['deleteContact', props.id],
+      deleteContactById,
+      {
+         onSuccess: () => {
+            navigation.replace('Home');
+         },
+      },
+   );
+
+   function onDeleteHandler() {
+      mutation.mutate({ id: props.id, token: token });
+   }
+
    return (
       <Modal
          isVisible={props.isModalOpen}
@@ -54,6 +76,9 @@ const DeleteModal = (props: DeleteModalProps) => {
                   withIcon={false}
                   style={{ backgroundColor: COLORS.error }}
                   rippleColor={COLORS.rippleError}
+                  onPress={onDeleteHandler}
+                  isLoading={mutation.isLoading}
+                  spinnerColor={COLORS.error}
                >
                   حذف کن
                </Button>

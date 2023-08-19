@@ -79,3 +79,16 @@ export const editContactById: MutationFunction<
       return response.data as FullContact;
    }
 };
+
+export const deleteContactById: MutationFunction<
+   void,
+   { token?: string | null; id: string }
+> = async ({ token, id }) => {
+   if (token) {
+      await axios.delete(`${API_URL}/contact/${id}`, {
+         headers: {
+            'x-authentication-token': token,
+         },
+      });
+   }
+};
