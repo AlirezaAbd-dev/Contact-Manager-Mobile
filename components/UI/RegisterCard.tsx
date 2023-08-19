@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, Vibration } from 'react-native';
+import { Linking, Pressable, StyleSheet, Text, Vibration } from 'react-native';
 import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,6 +9,7 @@ import Button from './Button';
 import CustomTextInput from './TextInput';
 import SignCard from '../layouts/SignCard';
 import { signValidation } from '../../validation/signValidation';
+import { MAIN_URL } from '../../env';
 
 type RegisterCardType = {
    title: 'ورود' | 'ثبت نام';
@@ -96,7 +97,10 @@ const RegisterCard = (props: RegisterCardType) => {
                </>
             )}
          />
-         <Pressable style={styles.forgetPasswordPressable}>
+         <Pressable
+            onPress={() => Linking.openURL(`${MAIN_URL}/resetPassword`)}
+            style={styles.forgetPasswordPressable}
+         >
             <Text style={styles.forgetPasswordText}>
                رمز عبور خود را فراموش کرده اید؟
             </Text>
