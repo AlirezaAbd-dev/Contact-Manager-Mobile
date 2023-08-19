@@ -3,7 +3,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Login from './sign/Login';
 import Signin from './sign/Signin';
 import { COLORS } from '../constants/Colors';
-import DeleteAccount from './sign/DeleteAccount';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Screens, SignScreenParams } from '../routes';
 
@@ -35,11 +34,6 @@ const LoginScreen = () => {
             tabBarLabelStyle: { fontFamily: 'Vazir' },
          }}
       >
-         <Tab.Screen
-            name='DeleteAccount'
-            component={DeleteAccount}
-            options={{ title: 'حذف حساب' }}
-         />
          <Tab.Screen
             name='Signin'
             component={Signin}
