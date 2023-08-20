@@ -3,11 +3,9 @@ import {
    FlatList,
    StyleSheet,
    View,
-   Text,
    RefreshControl,
-   Image,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 
 import MainContactCard from '../components/cards/MainContactCard';
@@ -15,17 +13,34 @@ import { getContactsAPI } from '../APIs/contactAPIs';
 import useToken from '../hooks/useToken';
 import { COLORS } from '../constants/Colors';
 import Error from '../components/UI/Error';
-import Button from '../components/UI/Button';
-import { useNavigation } from '@react-navigation/native';
-import { Screens } from '../routes';
+import AutoComplete from '../components/Home/AutoComplete';
+import NoContact from '../components/Home/NoContact';
+
+export type AutoCompleteData = {
+   id: string;
+   title: string;
+};
 
 const HomeScreen = () => {
    const token = useToken();
-   const navigation = useNavigation<Screens>();
+   const [autoCompleteData, setAutoCompleteData] = useState<AutoCompleteData[]>(
+      [],
+   );
 
    const { data, isLoading, isError, error, refetch, isFetching } = useQuery(
       ['contacts', token],
       getContactsAPI,
+      {
+         onSuccess: (data) => {
+            const filteredData = data?.map((item) => ({
+               id: item._id,
+               title: item.fullname,
+            }));
+
+            if (filteredData && filteredData.length > 0)
+               setAutoCompleteData(filteredData);
+         },
+      },
    );
    return (
       <View style={styles.container}>
@@ -45,58 +60,33 @@ const HomeScreen = () => {
             />
          )}
 
-         {!isLoading && data?.length === 0 && (
-            <>
-               <Image
-                  source={require('../assets/images/404_test_1a.gif')}
-                  style={{ width: '100%', height: 'auto', aspectRatio: 16 / 9 }}
-               />
-               <Text
-                  style={{
-                     color: 'white',
-                     fontFamily: 'Vazir',
-                     alignSelf: 'center',
-                     marginTop: 10,
-                  }}
-               >
-                  شما در حال حاظر هیچ مخاطبی را ثبت نکرده اید.
-               </Text>
-               <Button
-                  withIcon={false}
-                  style={{
-                     borderRadius: 20,
-                     alignSelf: 'center',
-                     marginTop: 30,
-                  }}
-                  onPress={() => navigation.navigate('AddContact')}
-               >
-                  ساخت مخاطب جدید
-               </Button>
-            </>
-         )}
+         {!isLoading && data?.length === 0 && <NoContact />}
 
          {!isLoading && data && data.length > 0 && (
-            <FlatList
-               style={{ flex: 1 }}
-               data={data}
-               refreshControl={
-                  <RefreshControl
-                     refreshing={isFetching}
-                     onRefresh={refetch}
-                     colors={[COLORS.primary]}
-                     progressBackgroundColor={COLORS.background}
-                  />
-               }
-               keyExtractor={(item) => item._id}
-               renderItem={({ item }) => {
-                  return (
-                     <MainContactCard
-                        key={item._id}
-                        {...item}
+            <View style={{ flex: 1 }}>
+               <AutoComplete autoCompleteData={autoCompleteData} />
+               <FlatList
+                  style={{ flex: 1 }}
+                  data={data}
+                  refreshControl={
+                     <RefreshControl
+                        refreshing={isFetching}
+                        onRefresh={refetch}
+                        colors={[COLORS.primary]}
+                        progressBackgroundColor={COLORS.background}
                      />
-                  );
-               }}
-            />
+                  }
+                  keyExtractor={(item) => item._id}
+                  renderItem={({ item }) => {
+                     return (
+                        <MainContactCard
+                           key={item._id}
+                           {...item}
+                        />
+                     );
+                  }}
+               />
+            </View>
          )}
       </View>
    );

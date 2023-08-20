@@ -1,6 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
+import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { TokenContextProvider } from './context/tokenContext';
@@ -13,10 +14,12 @@ const queryClient = new QueryClient();
 export default function App() {
    return (
       <TokenContextProvider>
-         <QueryClientProvider client={queryClient}>
-            <StatusBar style='light' />
-            <Navigation />
-         </QueryClientProvider>
+         <AutocompleteDropdownContextProvider>
+            <QueryClientProvider client={queryClient}>
+               <StatusBar style='light' />
+               <Navigation />
+            </QueryClientProvider>
+         </AutocompleteDropdownContextProvider>
       </TokenContextProvider>
    );
 }
