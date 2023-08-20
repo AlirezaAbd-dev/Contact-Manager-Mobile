@@ -1,8 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useLayoutEffect, useState } from 'react';
+import { useContext, useLayoutEffect } from 'react';
+import { TokenContext } from '../context/tokenContext';
 
 const useToken = () => {
-   const [token, setToken] = useState<string | null>();
+   const { token, setToken } = useContext(TokenContext);
 
    useLayoutEffect(() => {
       (async () => {

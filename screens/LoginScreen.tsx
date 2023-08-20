@@ -1,24 +1,12 @@
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Login from './sign/Login';
 import Signin from './sign/Signin';
 import { COLORS } from '../constants/Colors';
-import { useNavigation } from '@react-navigation/native';
-import { Screens } from '../routes';
-import useToken from '../hooks/useToken';
 
 const Tab = createMaterialTopTabNavigator();
 
 const LoginScreen = () => {
-   const navigation = useNavigation<Screens>();
-   const token = useToken();
-
-   useLayoutEffect(() => {
-      if (token) {
-         navigation.replace('Home');
-      }
-   }, [token]);
-
    return (
       <Tab.Navigator
          initialRouteName='Login'

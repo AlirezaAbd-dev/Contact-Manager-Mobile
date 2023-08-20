@@ -1,18 +1,21 @@
 import { Pressable, StyleSheet, View } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import type _default from '@expo/vector-icons/build/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+
 import { COLORS } from '../../constants/Colors';
 import { Screens } from '../../routes';
-import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { TokenContext } from '../../context/tokenContext';
 
 const LogoutButton = () => {
    const navigation = useNavigation<Screens>();
+   const { setToken } = useContext(TokenContext);
 
    async function logoutHandler() {
       await AsyncStorage.removeItem('token');
-      navigation.replace('SignScreen', { token: undefined });
+      setToken(null);
+      navigation.replace('SignScreen');
    }
 
    return (
