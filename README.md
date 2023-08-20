@@ -47,6 +47,12 @@ it's just a mobile version of [web contact manager](https://contact-manager-ecru
 
 <br/>
 
+## Search Section In Home Screen
+
+![](images/Search.jpg)
+
+<br/>
+
 ## Signup Screen
 
 ![](images/Signup.jpg)

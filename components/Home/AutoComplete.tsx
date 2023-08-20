@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import React from 'react';
 
 import { AutoCompleteData } from '../../screens/HomeScreen';
@@ -56,5 +56,3 @@ const AutoComplete = (props: AutoCompleteProps) => {
 };
 
 export default AutoComplete;
-
-const styles = StyleSheet.create({});
