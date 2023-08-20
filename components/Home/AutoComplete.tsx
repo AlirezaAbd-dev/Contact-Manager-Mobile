@@ -1,10 +1,11 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
+
+import { AutoCompleteData } from '../../screens/HomeScreen';
 import { COLORS } from '../../constants/Colors';
+import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import { Screens } from '../../routes';
-import { AutoCompleteData } from '../../screens/HomeScreen';
 
 type AutoCompleteProps = {
    autoCompleteData: AutoCompleteData[];
@@ -14,60 +15,46 @@ const AutoComplete = (props: AutoCompleteProps) => {
    const navigation = useNavigation<Screens>();
 
    return (
-      <AutocompleteDropdown
-         clearOnFocus={true}
-         dataSet={props.autoCompleteData}
-         textInputProps={{
-            placeholder: 'دنبال کی میگردی؟',
-            autoCorrect: false,
-            cursorColor: COLORS.primary,
-            style: {
-               color: '#fff',
-            },
-         }}
-         suggestionsListContainerStyle={styles.suggestionsListContainerStyle}
-         inputContainerStyle={styles.inputContainerStyle}
-         suggestionsListTextStyle={styles.suggestionsListTextStyle}
-         ItemSeparatorComponent={
-            <View style={styles.separatorComponent}></View>
-         }
-         onSelectItem={(prop) => {
-            if (prop?.id) navigation.navigate('Details', { id: prop.id });
-         }}
-         renderItem={(prop) => {
-            return <Text style={styles.itemText}>{prop.title}</Text>;
-         }}
-      />
+      <View>
+         <Dropdown
+            data={props.autoCompleteData}
+            placeholder='دنبال کی میگردی؟'
+            searchPlaceholder='جستجو'
+            style={{
+               borderRadius: 20,
+               borderWidth: 0.17,
+               marginTop: 10,
+               borderColor: COLORS.primary,
+            }}
+            containerStyle={{
+               backgroundColor: COLORS.background,
+               borderColor: COLORS.primary,
+               borderRadius: 20,
+               maxHeight: 300,
+            }}
+            selectedTextStyle={{ color: COLORS.primary }}
+            placeholderStyle={{ color: 'white', marginRight: 10 }}
+            itemTextStyle={{ color: 'white' }}
+            inputSearchStyle={{
+               textAlign: 'right',
+               backgroundColor: COLORS.card,
+               borderRadius: 20,
+               borderColor: COLORS.primary,
+               color: 'white',
+               direction: 'rtl',
+            }}
+            activeColor={COLORS.card}
+            search
+            labelField='title'
+            valueField='id'
+            onChange={(selected) => {
+               navigation.navigate('Details', { id: selected.id });
+            }}
+         />
+      </View>
    );
 };
 
 export default AutoComplete;
 
-const styles = StyleSheet.create({
-   suggestionsListContainerStyle: {
-      borderRadius: 20,
-      overflow: 'hidden',
-      backgroundColor: COLORS.background,
-   },
-   inputContainerStyle: {
-      backgroundColor: COLORS.background,
-      borderWidth: 0.4,
-      borderRadius: 10,
-      borderColor: COLORS.primary,
-   },
-   suggestionsListTextStyle: {
-      color: 'white',
-   },
-   separatorComponent: {
-      borderBottomWidth: 0.17,
-      borderColor: COLORS.primary,
-   },
-   itemText: {
-      color: 'white',
-      padding: 13,
-      paddingRight: 20,
-      fontSize: 15,
-      fontFamily: 'Vazir',
-      fontWeight: 'bold',
-   },
-});
+const styles = StyleSheet.create({});

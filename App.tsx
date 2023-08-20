@@ -1,7 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
-import { AutocompleteDropdownContextProvider } from 'react-native-autocomplete-dropdown';
 import {
    setJSExceptionHandler,
    setNativeExceptionHandler,
@@ -14,16 +13,14 @@ import { Alert } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
-setJSExceptionHandler((err, isFatal) => {
-   console.info(`IsFatal: ${isFatal};`);
-   console.error(err);
+setJSExceptionHandler((err, _isFatal) => {
    Alert.alert('error', err.message);
 }, true);
 
 if (process.env.NODE_ENV === 'production') {
    setNativeExceptionHandler((ex) => {
       Alert.alert('Something went wrong!', ex);
-   }, true);
+   });
 }
 
 const queryClient = new QueryClient();
@@ -31,12 +28,10 @@ const queryClient = new QueryClient();
 export default function App() {
    return (
       <TokenContextProvider>
-         <AutocompleteDropdownContextProvider>
-            <QueryClientProvider client={queryClient}>
-               <StatusBar style='light' />
-               <Navigation />
-            </QueryClientProvider>
-         </AutocompleteDropdownContextProvider>
+         <QueryClientProvider client={queryClient}>
+            <StatusBar style='light' />
+            <Navigation />
+         </QueryClientProvider>
       </TokenContextProvider>
    );
 }

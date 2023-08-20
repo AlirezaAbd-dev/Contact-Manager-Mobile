@@ -28,7 +28,6 @@ const HomeScreen = () => {
       ['contacts', token],
       getContactsAPI,
    );
-   console.log(isFetching);
 
    const autoCompleteData = useMemo(() => {
       if (data) {
@@ -42,7 +41,7 @@ const HomeScreen = () => {
       <View style={styles.container}>
          {isLoading && (
             <ActivityIndicator
-               style={{ alignSelf: 'center' }}
+               style={{ alignSelf: 'center', marginTop: 20 }}
                size={'large'}
                color={COLORS.primary}
             />
