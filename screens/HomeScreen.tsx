@@ -5,7 +5,7 @@ import {
    View,
    RefreshControl,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { useQuery } from 'react-query';
 
 import MainContactCard from '../components/cards/MainContactCard';
@@ -23,27 +23,21 @@ export type AutoCompleteData = {
 
 const HomeScreen = () => {
    const token = useToken();
-   const [autoCompleteData, setAutoCompleteData] = useState<AutoCompleteData[]>(
-      [],
-   );
 
    const { data, isLoading, isError, error, refetch, isFetching } = useQuery(
       ['contacts', token],
       getContactsAPI,
-      {
-         onSuccess: (data) => {
-            const filteredData = data?.map((item) => ({
-               id: item._id,
-               title: item.fullname,
-            }));
-
-            if (filteredData && filteredData.length > 0)
-               setAutoCompleteData(filteredData);
-         },
-         retry: true,
-         
-      },
    );
+   console.log(isFetching);
+
+   const autoCompleteData = useMemo(() => {
+      if (data) {
+         return data.map((item) => ({ id: item._id, title: item.fullname }));
+      } else {
+         return [];
+      }
+   }, [data]);
+
    return (
       <View style={styles.container}>
          {isLoading && (
