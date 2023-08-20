@@ -64,8 +64,9 @@ const styles = StyleSheet.create({
    },
    itemText: {
       color: 'white',
-      padding: 10,
+      padding: 13,
       paddingRight: 20,
+      fontSize: 15,
       fontFamily: 'Vazir',
       fontWeight: 'bold',
    },
