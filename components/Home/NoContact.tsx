@@ -10,7 +10,7 @@ const NoContact = () => {
    return (
       <>
          <Image
-            source={require('../assets/images/404_test_1a.gif')}
+            source={require('../../assets/images/404_test_1a.gif')}
             style={styles.image}
          />
          <Text style={styles.text}>

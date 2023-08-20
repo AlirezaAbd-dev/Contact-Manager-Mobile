@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import React from 'react';
 import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
 import { COLORS } from '../../constants/Colors';
@@ -20,6 +20,7 @@ const AutoComplete = (props: AutoCompleteProps) => {
          textInputProps={{
             placeholder: 'دنبال کی میگردی؟',
             autoCorrect: false,
+            cursorColor: COLORS.primary,
             style: {
                color: '#fff',
             },
@@ -32,6 +33,9 @@ const AutoComplete = (props: AutoCompleteProps) => {
          }
          onSelectItem={(prop) => {
             if (prop?.id) navigation.navigate('Details', { id: prop.id });
+         }}
+         renderItem={(prop) => {
+            return <Text style={styles.itemText}>{prop.title}</Text>;
          }}
       />
    );
@@ -57,5 +61,12 @@ const styles = StyleSheet.create({
    separatorComponent: {
       borderBottomWidth: 0.17,
       borderColor: COLORS.primary,
+   },
+   itemText: {
+      color: 'white',
+      padding: 10,
+      paddingRight: 20,
+      fontFamily: 'Vazir',
+      fontWeight: 'bold',
    },
 });
