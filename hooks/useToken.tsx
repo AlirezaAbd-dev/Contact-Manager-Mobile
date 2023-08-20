@@ -7,8 +7,10 @@ const useToken = () => {
 
    useLayoutEffect(() => {
       (async () => {
-         const token = await AsyncStorage.getItem('token');
-         if (token) setToken(token);
+         const getTokenFromStorage = await AsyncStorage.getItem('token');
+         if (!token) {
+            if (getTokenFromStorage) setToken(token);
+         }
       })();
    }, []);
 

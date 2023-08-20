@@ -38,6 +38,7 @@ const AddContactScreen = () => {
 
    async function onSubmitHandler(data: EditContactSchemaType) {
       try {
+         setIsLoading(true);
          const url = `${API_URL}/contact`;
          const HEADERS = {
             'x-authentication-token': token as string,
@@ -57,12 +58,13 @@ const AddContactScreen = () => {
 
          navigation.replace('Home');
       } catch (err: any) {
-         setIsLoading(false);
          if (err.response) {
             setError(err.response.data.message);
          } else {
             setError(err.message);
          }
+      } finally {
+         setIsLoading(false);
       }
    }
 
