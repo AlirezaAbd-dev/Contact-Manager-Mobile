@@ -40,6 +40,8 @@ const HomeScreen = () => {
             if (filteredData && filteredData.length > 0)
                setAutoCompleteData(filteredData);
          },
+         retry: true,
+         
       },
    );
    return (
