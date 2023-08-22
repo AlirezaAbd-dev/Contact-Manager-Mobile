@@ -47,7 +47,9 @@ const Avatar = (props: AvatarProps) => {
                if (err.response) {
                   setError(err.response.data.message);
                } else {
-                  setError(err.message);
+                  setError(
+                     'خطایی در ارتباط با سرور پیش آمد، دوباره تلاش کنید!',
+                  );
                }
             }
          }

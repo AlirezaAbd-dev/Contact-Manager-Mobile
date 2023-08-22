@@ -49,7 +49,8 @@ const EditContactScreen = () => {
       return (
          <Error
             errorMessage={
-               (error as any).response.data.message || (error as any).message
+               (error as any).response.data.message ||
+               'خطایی در ارتباط با سرور پیش آمد!'
             }
          />
       );
