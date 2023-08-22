@@ -14,7 +14,7 @@ import { Alert } from 'react-native';
 SplashScreen.preventAutoHideAsync();
 
 setJSExceptionHandler((err, _isFatal) => {
-   Alert.alert('error', err.message);
+   // Alert.alert('error', err.message);
 }, true);
 
 if (process.env.NODE_ENV === 'production') {
