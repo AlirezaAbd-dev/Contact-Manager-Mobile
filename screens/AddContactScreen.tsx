@@ -3,6 +3,7 @@ import {
    StyleSheet,
    View,
    KeyboardAvoidingView,
+   I18nManager,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
    },
    buttonsContainer: {
       marginTop: 10,
-      flexDirection: 'row',
+      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
       justifyContent: 'flex-end',
       gap: 8,
    },

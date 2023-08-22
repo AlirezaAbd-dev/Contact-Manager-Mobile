@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { I18nManager, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
 import CustomTextInput from '../UI/TextInput';
@@ -102,7 +102,7 @@ export default Form;
 
 const styles = StyleSheet.create({
    lastInputSection: {
-      flexDirection: 'row',
+      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
       justifyContent: 'flex-end',
       gap: 8,
       alignItems: 'center',

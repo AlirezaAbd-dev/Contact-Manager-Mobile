@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, I18nManager } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
       paddingVertical: 5,
    },
    cardActionButtons: {
-      flexDirection: 'row',
+      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
       justifyContent: 'space-evenly',
       marginBottom: 10,
    },

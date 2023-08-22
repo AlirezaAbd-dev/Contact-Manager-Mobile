@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { I18nManager, StyleSheet, View } from 'react-native';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
       marginTop: 20,
    },
    lastInputsSection: {
-      flexDirection: 'row',
+      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
       justifyContent: 'flex-end',
       alignItems: 'center',
       gap: 8,
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
       borderRadius: 20,
    },
    buttonsContainer: {
-      flexDirection: 'row',
+      flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
       gap: 8,
       justifyContent: 'flex-end',
       marginTop: 20,

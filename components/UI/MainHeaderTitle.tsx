@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { I18nManager, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { COLORS } from '../../constants/Colors';
 
@@ -17,7 +17,7 @@ export default MainHeaderTitle;
 
 const styles = StyleSheet.create({
    headerContainer: {
-      flexDirection: 'row-reverse',
+      flexDirection: I18nManager.isRTL ? 'row' : 'row-reverse',
       gap: 4,
    },
    headerTitle: {

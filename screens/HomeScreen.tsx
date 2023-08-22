@@ -29,6 +29,10 @@ const HomeScreen = () => {
       getContactsAPI,
    );
 
+   if (!data && !isLoading && !isError) {
+      refetch();
+   }
+
    const autoCompleteData = useMemo(() => {
       if (data) {
          return data.map((item) => ({ id: item._id, title: item.fullname }));

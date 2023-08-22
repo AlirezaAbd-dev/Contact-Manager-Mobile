@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert, I18nManager, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import Modal from 'react-native-modal';
 
@@ -29,15 +29,11 @@ const DeleteModal = (props: DeleteModalProps) => {
             navigation.replace('Home');
          },
          onError: (err: any) => {
-            console.log(err);
-            if (err.response) {
-               Alert.alert(
-                  'خطا',
-                  err.response.data.message || err.response.data.error,
-               );
-            } else {
-               Alert.alert('خطا', err.message);
-            }
+            Alert.alert(
+               'خطا',
+               err.response.data.message ||
+                  'خطایی در سرور رخ داد، دوباره تلاش کنید!',
+            );
             props.closeModal();
          },
       },
@@ -127,7 +123,7 @@ const styles = StyleSheet.create({
       padding: 10,
    },
    modalButtonsContainer: {
-      flexDirection: 'row-reverse',
+      flexDirection: I18nManager.isRTL ? 'row' : 'row-reverse',
       gap: 8,
       margin: 10,
    },

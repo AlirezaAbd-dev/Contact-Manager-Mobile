@@ -1,4 +1,11 @@
-import { Linking, Pressable, StyleSheet, Text, Vibration } from 'react-native';
+import {
+   I18nManager,
+   Linking,
+   Pressable,
+   StyleSheet,
+   Text,
+   Vibration,
+} from 'react-native';
 import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -122,7 +129,8 @@ export default RegisterCard;
 
 const styles = StyleSheet.create({
    forgetPasswordPressable: {
-      alignSelf: 'flex-end',
+      width: '100%',
+      flexDirection: I18nManager.isRTL ? 'row' : 'row-reverse',
       marginTop: 20,
    },
    forgetPasswordText: {

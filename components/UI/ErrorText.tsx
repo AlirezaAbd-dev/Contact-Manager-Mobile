@@ -4,7 +4,12 @@ import { COLORS } from '../../constants/Colors';
 
 const ErrorText = (props: { text: string }) => {
    return (
-      <Text style={{ fontFamily: 'Vazir', color: COLORS.error }}>
+      <Text
+         style={{
+            fontFamily: 'Vazir',
+            color: COLORS.error,
+         }}
+      >
          {props.text}
       </Text>
    );
