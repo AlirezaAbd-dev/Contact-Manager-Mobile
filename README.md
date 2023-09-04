@@ -6,6 +6,8 @@
 
 it's just a mobile version of [web contact manager](https://contact-manager-ecru.vercel.app) that is made by react native and 💖
 
+## [Download Last Version](https://github.com/AlirezaAbd-dev/Contact-Manager-Mobile/releases/download/v1.0.21/Contact-Manager.apk)
+
 [Web Contact Manager repository](https://github.com/AlirezaAbd-dev/Contact-Manager)
 
 <br/>
